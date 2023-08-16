@@ -21,3 +21,8 @@ npx json-server --port 9999 --watch db.json
 ## 업데이트 내역
 - Version 0.0.1 - 2023.07.13 : Create New Homepage
 - Version 0.0.2 - 2023.07.22 : Big Change in UI design
+
+
+## 라이브러리
+- swiper@6.8.4
+- react-icons
