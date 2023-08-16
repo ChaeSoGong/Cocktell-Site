@@ -1,3 +1,7 @@
+## json Server 여는 방법
+npx json-server --port 9999 --watch db.json
+
+
 # 칵테일을 말하다 - Cocktell
 **LINK : https://chaesogong.github.io/Cocktell/page/**  
 ## 프로젝트 참여자

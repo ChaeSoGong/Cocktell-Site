@@ -1,27 +1,233 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+/* -------------- D E F A U L T -------------- */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+*{margin: 0; padding: 0; text-decoration: none; color: black;}
+main{margin: 30px auto; max-width: 1280px;}
+
+
+/* --------------- L A Y O U T --------------- */
+
+/* 헤더 (Header) : 임채윤 
+- Header is Client Component */
+header{width:100%; background-color: rgb(255, 255, 255);}
+.header_container{margin:0 auto; max-width: 1280px; height:30px; display: flex; justify-content: flex-end; align-items: center;}
+.header_item, .header_item>a{font-size: 12px;/* font-family: Arial, Helvetica, sans-serif; */}
+.header_item>input{border:0 ; background-color: transparent; font-size:12px; /* font-family: 'Arial, Helvetica, sans-serif'; */ cursor:pointer}
+.header_item_line{font-size: 10px; margin:15px 15px 15px 15px}
+
+
+/* 네비게이션 (Nav) : 장소현 */
+nav{z-index: 3; width: 100%; background-color: rgb(255, 255, 255); 
+    padding-top: 5px;position:sticky; top:-1px;}
+.nav{margin:0 auto; max-width: 1280px; display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgb(202, 202, 202); padding-bottom: 5px;}
+.left_nav{display: flex; align-items: center; /* font-family: 'Tinos', serif; */}
+.nav_logo{font-size: 45px; font-weight: bold;}
+.nav_logo:hover{color: #00a782;}
+.nav_menu{font-size: 26px; }
+.nav_menu_item{margin-left: 60px;}
+.nav_menu_item:hover{color: #00a782;}
+.nav_subMenu{align-items:center; display: flex;}
+.nav_subMenu_item{padding-left:23px; font-size: 30px; align-items: center;}
+.nav_subMenu_item_menu{font-size: 30px; padding-left: 23px; position:relative}
+.nav_subMenu_item:hover{color:#555555}
+.nav_subMenu_item_menu:hover{color:#505050}
+
+/* 네비게이션 메뉴 드롭다운 (Nav Menu Dropdown) : 임채윤 */
+.dropdown_item{z-index: 1; display: none; position: absolute; right:0; top:40px; font-weight: 400; width: 150px;}
+.nav_subMenu_item_menu:hover .dropdown_item{display: flex; flex-flow: column nowrap; background-color: #f5f5f5;}
+.dropdown_item a{font-size: 15px; padding : 10px 20px; border: 2px solid rgb(180, 180, 180);}
+.dropdown_item a:hover{background-color: rgb(206, 206, 206);}
+
+
+/** 하단 페이지 (Footer) : 임채윤 */
+footer{font-size: 12px; padding-bottom: 30px; background-color: #e6e6e6; border-top:1px solid rgba(178, 178, 178, 0.471)}
+.footer_container{margin:30px auto; max-width: 1280px;}
+
+
+
+/* -------------- H O M E ( M A I N ) -------------- */
+
+.home_article{opacity: 0; transition:all 1s;}
+.article_custom_container{display: flex; flex-flow: column nowrap; align-items: center;}
+.article_text{margin-bottom:150px;text-align: center;}
+.article_text>h2{font-size: 50px; font-weight: 700;}
+.article_text>h3{font-size: 30px; color:#747474;}
+
+/*배너, Swiper 구현 : 장소현
+  배너, Swiper 디자인 : 임채윤 */
+.banner{z-index: 1;height : 480px; background-color : rgb(206, 206, 206) ;}
+.banner_Slide_item{display: flex; }
+.banner_Slide_item>a{position:absolute; background-color: rgb(255, 255, 255); border-radius: 30px;bottom:70px; right:90px;
+     color:rgb(0, 0, 0); width: 170px; height: 50px; font-size: 25px; font-weight:300; text-align: center; padding-top:5px}
+.banner_Slide_item>a:hover{background-color: #93c9c2; color: #ffffff;}
+.banner_Slide_item img{object-fit:cover;}
+.swiper-button-next::after,.swiper-button-prev::after {display: none;}
+.banner>.swiper-button-next:hover::after{display: block !important; color:#ffffff !important; opacity: 0.3 !important;}
+.banner>.swiper-button-prev:hover::after{display: block !important; color:#ffffff !important; opacity: 0.3 !important;}
+.banner .swiper-pagination-bullet{width: 18px !important; height: 18px !important;
+    margin: 0 10px !important; background-color: #e7e7e7 !important; opacity: 0.5 !important;}
+.banner .swiper-pagination-bullet-active{background-color: #ffffff !important; opacity: 1 !important;}
+.banner_text{position: absolute; width:300px;}
+.banner1{top: 150px; left: 140px;}
+.banner1>h1{ font-size: 50px; color:rgb(32, 70, 168)}
+.banner1>h3{ font-size: 17px; color:rgb(34, 80, 179)}
+.banner2{top: 150px; right:100px}
+.banner2>h1{ font-size: 50px; color:rgb(255, 255, 255)}
+.banner2>h3{ font-size: 17px; color:rgb(255, 255, 255)}
+.banner3{top: 170px; right:100px}
+.banner3>h1{ font-size: 50px; color:rgb(255, 255, 255)}
+.banner3>h3{ font-size: 17px; color:rgb(255, 255, 255)}
+
+/*레시피 슬라이더 구현 : 장소현
+  슬라이더 디자인, 기능 구현, 화살표 디자인 : 임채윤*/
+.look_slide{width:100%; height: 460px;} 
+.look_Slide_item{width:100px;height:80px; border:1px solid rgb(179, 179, 179);border-radius: 20px;}
+.look_Slide_item>a{position:absolute; top:20px; left:20px;width: 260px; height: 260px; border:1px solid #efefef}
+.look_Slide_text h3{font-size: 18px; font-weight: 700; position:relative; top:305px; left: 20px;}
+.look_Slide_text h4{position:absolute; top:340px; left:12px; width:270px;}
+.look_slide>.swiper-button-next{top:47%; width:70px; height: 70px; background-color: #fff; box-shadow: 2px 2px 2px rgb(62, 62, 62); border-radius: 50%;}
+.look_slide>.swiper-button-prev{top:47%; width:70px; height: 70px; background-color: #fff; box-shadow: 2px 2px 2px rgb(62, 62, 62); border-radius: 50%;}
+.look_slide>.swiper-button-next::after{padding-left:4px; font-size: 30px; font-weight: 600; display: block !important; color:#000000 !important; }
+.look_slide>.swiper-button-prev::after{padding-right:4px; font-size: 30px; font-weight: 600; display: block !important; color:#000000 !important; }
+/* 화살표 없애기 : 장소현 */
+.look_slide>.swiper-button-prev.swiper-button-disabled{display: none;}
+.look_slide>.swiper-button-next.swiper-button-disabled{display: none;}
+
+/*커스텀 레시피 Article 구현 및 디자인 : 임채윤*/
+.article_custom{width:100%; display: flex; flex-flow: row nowrap; justify-content: space-around;}
+.article_custom_item{width: 340px; height: 340px;background-color: #cccccc; position:relative;}
+.article_custom_button{display:flex; align-items: center; justify-content: center;
+    margin-top: 150px; font-size: 28px; width: 250px; height: 100px; background-color: #e4e4e4;}
+
+/* My Bag Article 구현 및 디자인 : 임채윤 */
+.mybag_preview1 .swiper-wrapper{transition-timing-function: linear;}
+.mybag_preview2 .swiper-wrapper{transition-timing-function: linear;}
+.mybag_preview3 .swiper-wrapper{transition-timing-function: linear;}
+.article_material_slide{position:relative;}
+.article_material_slide::before{z-index: 2;content:""; position:absolute; left:0; top:0;width:50%; height:100%;
+    background:linear-gradient(to right,rgb(255, 255, 255) 0%,rgba(255, 255, 255, 0) 20%); pointer-events: none;}
+.article_material_slide::after{z-index: 2;content:""; position:absolute; right:0; top:0;width:50%; height:100%; 
+    background:linear-gradient(to left,rgb(255, 255, 255) 0%,rgba(255, 255, 255, 0) 20%); pointer-events: none;}
+.material_slide_item img{border-radius: 20%; border: 3px solid rgba(0, 0, 0, 0.086)}
+
+
+
+
+/* ---------------- L O G I N ---------------- */
+
+/*로그인페이지 담당 : 장소현*/
+.box{display: flex; justify-content: center; }
+.loginPage{ display: flex; justify-content: center; padding : 0 54px 0 54px; width:450px; height: 500px; margin-top: 20px;  }
+.login_txt{font-size: 35px; justify-content: center;display: flex;}
+.login_subtxt{font-size: 15px;justify-content: center;display: flex; margin-bottom: 30px;}
+.user_input_txt{font-size: 14px;margin-top: 16px;}
+.user_input_box{font-size: 16px;padding: 5px 0 0 5px;height: 30px; width: 450px; display: flex; justify-content: left; margin-top: 13px;border: none; border-bottom: solid 1px #000000;}
+.user_input_chekcBox{margin-top: 16px;font-size: 20px;transform : scale(1.2);}
+.user_input_chekcBox_txt{font-size: 14px;align-items: first baseline;}
+.login_button{font-weight: bold;border:none; width: 450px; height: 50px; margin-top: 16px; border-radius: 5px;font-size: 15px;margin-bottom: 16px;}
+.login_button:hover{background-color: #989898}
+.login_except{ border: none;font-size: 15px; margin-left: 75px; margin-right: 60px; background-color:#ffffff;}
+.login_txt{ -ms-user-select: none; 
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
-}
+.login_subtxt{ -ms-user-select: none; 
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+
+
+/* --------------- S I G N U P --------------- */
+
+/* 회원가입 페이지 (Sign Up Page) : 임채윤 */
+.signup_page{display: flex; justify-content: center;}
+.signup_box{width:450px; height:550px; display: flex; flex-flow: column nowrap; margin: 0 20px; padding:30px;}
+.signup_logo{font-size: 40px; text-align: center; margin-bottom: 30px;}
+.signup_logo, .signup_gender_item>div{
+    -ms-user-select: none; 
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;}
+.signup_container{height: 100%; display: flex; flex-flow: column nowrap; justify-content: space-between;}
+.signup_item{height:60px; display: flex; flex-flow: column nowrap; font-size: 14px; justify-content: center;}
+.signup_date,.signup_text_box,.signup_nickname_check{flex:1 1 100%; border:none;}
+.signup_text_box{font-size:16px; padding:5px 0 0 5px; margin-top:2px; border-bottom: 1px solid black;}
+.signup_date{font-size: 14px; border-radius: 5px; background-color: #d8d8d8; color: rgb(111, 111, 111); margin:2px 10px 2px 0; padding-left: 5px; padding-right: 10px; /* font-family: Arial, Helvetica, sans-serif; */}
+.signup_item:nth-child(4){flex-flow: row nowrap;}
+div.signup_item_item1, .signup_item_item2{flex:1 1 100%; display: flex; flex-flow: column nowrap;}
+input.signup_item_item1{flex: 0 0 100px; margin: 21px 0 0 25px; height:40px;}
+.signup_nickname_check{border-radius: 5px; background-color: #6b6b6b; color: #ffffff;}
+.signup_gender{height:100%; display: inline-block; position:relative; background-color: #e3e3e3; border-radius: 12px; box-shadow: 0 0 0 7px rgb(203, 203, 203) inset;}
+.signup_gender>input{border: none; visibility: hidden;}
+.signup_gender>input:checked + .signup_gender_item{left: calc(100% - 62%);}
+.signup_gender_item{position:absolute;left:5px; top:4px; width:60%; height:30px; border-radius:10px; background-color: #8d8d8d; text-align: center; align-self: center; transition: 0.4s left; display: flex; justify-content: center; align-items: center;}
+.signup_gender_item:hover{background-color: #5d5d5d; color:white}
+.signup_gender_item div{height: fit-content; color: white;}
+.signup_gender_item div:nth-child(1){display:inline;}
+.signup_gender_item div:nth-child(2){display: none;}
+.signup_gender input:checked + .signup_gender_item div:nth-child(1){display: none}
+.signup_gender input:checked + .signup_gender_item div:nth-child(2){display:inline;}
+.signup_item:nth-child(5){flex-flow: row nowrap;}
+.signup_checkbox{display: flex; margin: 3px 0;}
+.signup_checkbox span{flex:1 1 100%; margin-left: 5px; padding-bottom: 4px;}
+.signup_button{height: 50px; border: none; border-radius: 10px; background-color: #c7c7c7; font-weight: bold; font-size: 15px;}
+.signup_button:hover{background-color: #989898; color: #ffffff;}
+
+
+
+/* ----------- C A L C U L A T E R ----------- */
+
+/*계산기 담당 : 장소현*/
+.calc_box{border:3.5px solid #989898; border-radius: 20px; padding : 80px 20px 30px 20px; display: flex; flex-flow: column nowrap; height: auto; }
+.calc_logo{font-size: 50px; font-weight: 700; display: flex; justify-content: center;margin-bottom:50px}
+.calc_input_box_item{width: 200px; border-bottom: 2px solid rgb(187, 187, 187); font-size: 17px;}
+.calc_input_box{display: flex; justify-content: center;}
+.calc_input_border{border:2px solid rgb(187, 187, 187); border-radius: 10px; padding : 30px 30px 20px 30px; display: flex; justify-content: space-between; width:800px; margin:15px 10px 15px 0px; }
+.calc_x{font-size: 40px; color: #a8a8a8;width: 50px; display: flex; justify-content: center; font-weight: 1px;}
+.calc_x>h2{color: #ffffff;}
+.calc_x>h2{
+    -ms-user-select: none; 
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;}
+.calc_add_container{justify-content: center; display: flex; margin-top : 15px; }
+.calc_add_button_container{justify-content:flex-end; display: flex; width:750px;}
+.calc_add_button{border-radius: 10px;font-size: 20px;background-color: #ff8686;padding : 5px 15px 5px 15px; color:#ffffff}
+.calc_submit_button_container{justify-content: center; display: flex; margin : 15px 0 50px 0; }
+.calc_submit_button{font-size:25px; background-color:  rgb(70, 98, 222); color: #ffffff;border-radius: 10px; padding:10px 30px 10px 30px;}
+.result_container{display: flex; flex-flow: column nowrap; height: auto; align-items: center;}
+.result_txt_1{font-size: 35px;font-weight: 700; justify-content: center; display: flex;}
+.result_box{display : flex;flex-flow: column nowrap;height: 500px; justify-content: space-between; width: 850px; border:3.5px solid #989898; border-radius: 20px; padding : 50px 150px 30px 150px;}
+.result_output_container{display : flex;  justify-content: space-between; }
+.result_output{font-size: 20px; width : 200px; border-bottom : 1.5px solid #989898; display:flex; justify-content: center; }
+.result_txt_2{font-size:25px; color : rgb(70, 98, 222); font-weight: 700; display: flex; justify-content: center;}
+/* .result_compare_container{display: flex; justify-content: center;} */
+.result_compare_container>h2{font-size: 20px; font-weight: 700; margin:0 5px 0 5px;}
+.result_compare_container>h3{font-size: 20px; margin:0 5px 0 5px;}
+.result_compare_output{font-size: 20px;color:#ff8686; }
+.result_compare_container{display : flex; justify-content: space-between;}
+/* ------------ R E C I P E ------------ */
+
+/* 레시피 페이지 : 임채윤 */
+.recipe_container{border:2px solid rgba(0, 128, 0, 0); display: grid; grid-template-columns: repeat(4, 300px); grid-row-gap: 30px; justify-content: space-between;}
+.recipe_item{border:2px solid rgb(174, 174, 174); display: flex; flex-flow: column nowrap; border-radius: 20px; justify-content: center;}
+.recipe_img{position:relative; width:300px; height:300px;}
+.recipe_img a{position:absolute; top:13px; left:13px; width:270px; height:270px;border:2px solid rgb(236, 236, 236)}
+.recipe_infor_box{display: flex; flex-flow: column nowrap; margin:0 15px 15px 15px}
+.recipe_infor{display: flex; flex-flow: row nowrap; justify-content: space-between; margin-bottom: 4px;}
+.recipe_name{font-size: 18px; font-weight: bold;}
+.recipe_comment{font-size: 12px;}
+
+/** 레시피 필터 Component : 임채윤 */
+.recipe_filter{z-index: 2; position: sticky; top:76px;}
