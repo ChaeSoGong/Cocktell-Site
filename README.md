@@ -1,34 +1,19 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 칵테일을 말하다 - Cocktell
+**LINK : https://chaesogong.github.io/Cocktell/page/**  
+## 프로젝트 참여자
+- *FrontEnd Developer : 임채윤, 장소현*
+  - 임채윤 : 메인 홈, 헤더, 배너
+  - 장소현 : 네비게이션바, 로그인 페이지
 
-## Getting Started
+- *BackEnd Developer : 임채윤, 장소현*
+  - 임채윤 : 
+  - 장소현 :
 
-First, run the development server:
+- *Design advice : 김동환*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+> 임채윤 (Chaeyun Lim : GitHub Page => https://github.com/ChaeDoll)  
+> 장소현 (Sohyeon Jang : GitHub Page => https://github.com/Jang-SoHyeon)  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 업데이트 내역
+- Version 0.0.1 - 2023.07.13 : Create New Homepage
+- Version 0.0.2 - 2023.07.22 : Big Change in UI design
