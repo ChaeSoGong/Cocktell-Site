@@ -24,5 +24,7 @@ npx json-server --port 9999 --watch db.json
 
 
 ## 라이브러리
+- -g json-server
 - swiper@6.8.4
 - react-icons
+npm install -g redis-cli
