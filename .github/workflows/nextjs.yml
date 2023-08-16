@@ -29,6 +29,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Download Library
+        run: npm i swiper@6.8.4
       - name: Checkout
         uses: actions/checkout@v3
       - name: Detect package manager
