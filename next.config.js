@@ -1,8 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
-
-module.exports = nextConfig
-
 const isProduction = process.env.NODE_ENV === 'production';
 
 export default {
@@ -18,3 +14,9 @@ export default {
   },
   assetPrefix: isProduction ? '/premium-page' : '',
 };
+
+/* const nextConfig = {}
+
+module.exports = nextConfig
+
+ */
