@@ -9,7 +9,7 @@ const nextConfig = {
         ignoreDuringBuilds: true,
       },
       images: {
-        loader: 'ChaeDoll',
+        loader: 'default',
         path: isProduction ? 'https://ChaeSoGong.github.io/' : 'http://localhost:3000',
       },
       assetPrefix: isProduction ? '/premium-page' : '',
