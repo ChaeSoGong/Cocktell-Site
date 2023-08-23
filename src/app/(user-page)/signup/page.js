@@ -1,11 +1,10 @@
 'use client'
 
-import { usersFETCH } from "../../../../휴지통/route";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react"
 export default function SignUp() {
   const [userData, setUserData] = useState([]);
-  useEffect(()=>{ //Server에서 Users Data를 Client에 가져오기
+  /* useEffect(()=>{ //Server에서 Users Data를 Client에 가져오기
     const usersClientFETCH = async() => {
         try{
             await setUserData(await usersFETCH('GET'));
@@ -15,7 +14,7 @@ export default function SignUp() {
     }
     usersClientFETCH();
     return(()=>{setUserData(null)}); //페이지를 나갈 때 유저데이터 기록 삭제
-},[])
+},[]) */
 
   /** useRef()를 통해 유효성 검사를 통과하지 못했을시, 해당 input 태그로 focus 자동이동 */
   const router = useRouter();
@@ -121,7 +120,7 @@ export default function SignUp() {
             age:age,
             gender:gender, //false(남자), true(여자)
           }
-          usersFETCH('POST', users).then(resolve=>{
+          /* usersFETCH('POST', users).then(resolve=>{
             console.log('user값을 받았습니다 =>',resolve);
             alert(`회원가입이 성공적으로 이루어졌습니다. 환영합니다 ${resolve.nickname}님`)
           });
@@ -129,7 +128,7 @@ export default function SignUp() {
             pathname:'/signup',
             cache:'no-store',
           });
-          router.refresh();
+          router.refresh(); */
           }
         }>
           <div className="signup_item">
