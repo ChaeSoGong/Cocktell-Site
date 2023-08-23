@@ -1,5 +1,3 @@
-import { getCustomData } from "../../../../휴지통/custom.get";
-import { cocktailsFETCH } from "../../../../휴지통/route"
 import { blurURL } from "@/config";
 import Image from 'next/image'
 import Link from "next/link";
