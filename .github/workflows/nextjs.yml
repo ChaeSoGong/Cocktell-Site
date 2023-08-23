@@ -28,6 +28,11 @@ jobs:
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
           cat .env
           
+      - name: install
+        run: npm install
+      - name: build
+        run: npm run build
+        
       - run: npm run export        # scripts : { export: 'next export' }
         env:
           CI: true
