@@ -7,12 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@3
+        with:
+          persist-credentials: false
+        
       - name: Setup Node
-      
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
           
       - name: Create .env file
@@ -21,11 +23,16 @@ jobs:
         env:
           SECRETS_CONTEXT: ${{ toJson(secrets) }}]
           
-      - run: yarn run export        # scripts : { export: 'next export' }
-      - run: touch ./out/.nojekyll  #위에서 말한 것처럼 이파일을 추가하지 않으면 _app 인식 못함
+      - run: npm run export        # scripts : { export: 'next export' }
+        env:
+          CI: true
+          DEPLOY_TARGET: gh-pages
+      - run: touch out/.nojekyll
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.4.0
         with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: out
+          clean : true
