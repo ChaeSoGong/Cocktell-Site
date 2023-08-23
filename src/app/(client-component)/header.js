@@ -6,20 +6,6 @@ import { useEffect, useState } from "react"
 
 export default function Header(){ //Developed by 임채윤
     
-/*     const [userData, setUserData] = useState(null);
-    useEffect(()=>{ //Server에서 Users Data를 Client에 가져오기
-        const usersClientFETCH = async() => {
-            try{
-                usersFETCH('GET', 1).then(user=>setUserData(user));
-            }catch(error){
-                console.log('Client message : Get Error while users data fetch!!!')
-            }
-        }
-        usersClientFETCH();
-    },[]) */
-
-    //if(userData!==null){console.log(userData)};
-
     const [login, setLogin] = useState(false);
     const [headerContent, setHeaderContent] = useState(null);
     const router = useRouter();

@@ -1,6 +1,6 @@
 'use client'
 
-import { usersFETCH } from "@/app/api/route";
+import { usersFETCH } from "../../../../휴지통/route";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react"
 export default function SignUp() {

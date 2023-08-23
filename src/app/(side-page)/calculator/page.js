@@ -4,10 +4,11 @@ import {useState, useRef, useEffect} from "react";
 
 export default function Calculator(){  
 
-  const [resultContent,setResultContent] = useState(null);
+  const [resultContent,setResultContent] = useState(null); // 결과 내용
   const alcoholInput = useRef([]);
   const amountInput = useRef([]);
   const[nextId, setNextId] = useState(3);
+  // const[calcState,setCalcState] = useState(false); // 결과인지 아닌지
 
   const [inputItems, setInputItems] = useState([
     { 
@@ -49,12 +50,19 @@ export default function Calculator(){
     // console.log(event.target.value+"가 삭제됨")
     setInputItems(result)
   }
-  const subInput = (event) => {
+ 
+
+
+
+
+  const subInput = () => {
+    const sub = document.getElementById('sub');
+
     inputItems.map(item=>{
       console.log(item)
     })
     //계산하기버튼 숨기기
-    event.preventDefault();
+    // event.preventDefault();
     //제출 할 때 경고하기
     //여기에 도수 중 100이 넘는애가 있으면 경고하게
     // 도수, 양 0보다 작을 때 경고하기(음수 일 경우)
@@ -93,6 +101,8 @@ export default function Calculator(){
       return alert("총 양이 0보다 커야 합니다.")
     }
     else{
+      sub.style.display = 'none';
+
       setResultContent(<>
       <div className="result_container">
       <div className="result_box">
@@ -106,32 +116,45 @@ export default function Calculator(){
       </div>
       <h2 className="result_txt_2">이 칵테일은</h2>
       <div className="result_compare_container">
-      <h2>소주</h2>
-      <h3>(16.5도 기준)</h3>
-      <span className="result_compare_output">{(sum/16.5/355).toFixed(2)}</span>
-      <h3>병</h3>
-      </div>
-      <div className="result_compare_container">
-      <h2>맥주</h2>
-      <h3>(4.6도 작은 캔 기준)</h3>
-      <span className="result_compare_output">{(sum/4.6/250).toFixed(2)}</span>
-      <h3>캔</h3>
+        <div className="result_compare_box">
+          <span className="ex1">
+            <h2>소주</h2>
+            <h3>(16.5도 기준)</h3>
+          </span>
+          <span className="ex2">
+            <span className="result_compare_output">{(sum/16.5/355).toFixed(2)}</span>
+            <h3>병</h3>
+          </span>
+        </div>
+        <div className="result_compare_box">
+         <span className="ex1">
+            <h2>맥주</h2>
+            <h3>(4.6도 작은 캔 기준)</h3>
+          </span>
+          <span className="ex2">
+            <span className="result_compare_output">{(sum/4.6/250).toFixed(2)}</span>
+            <h3>캔</h3>
+          </span>
+        </div>
       </div>
       <div className="result_txt_3">
       <h2>과 같습니다.</h2>
       <h2>지나친 음주는 건강에 해롭습니다.</h2>
       </div>
 
-      <a href="/calculator" className="replay">다시하기</a>
       {/* <button onClick={replay}>다시 하기</button> */}
-      {/* <button type="reset" onClick={replay}>리셋</button> */}
       </div> </div>
+      <div className="result_replay_container">
+      {/* <button onClick={replay}>다시 하기</button> */}
+      <a href="/calculator" className="result_replay">다시 계산하기</a>
+      </div>
     </> 
       )
     
     }
 
 }
+
 // const replay = () => {
 //   inputItems.splice(0,inputItems.length)
 //   var newInputItem = [...inputItems]
@@ -223,10 +246,12 @@ export default function Calculator(){
     </div>
       
       <div className="calc_submit_button_container">
-      <input type = "submit" onClick={subInput} value="계산하기" className="calc_submit_button"/>
+      {/* <input type = "submit" onClick={subInput} value="계산하기" className="calc_submit_button"/> */}
+      <input type = "button" onClick={subInput} value="계산하기" className="calc_submit_button" id='sub'/>
       </div>
-      
       {resultContent}
+
+      
       
   </div>
 

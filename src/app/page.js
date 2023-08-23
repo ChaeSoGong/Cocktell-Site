@@ -1,35 +1,49 @@
-//Hompage is Client Component
-'use client'
-import { useEffect, useRef } from 'react';
-import { Banner, RecipePreview, CustomPreview, MyBagPreview } from './(client-component)/homepage';
-export default function Home() {
-  const observe = useRef();
-  useEffect(()=>{ //Fade In / Fade Out 기능
-    observe.current = new IntersectionObserver((e)=>{e.forEach(article=>{
-      if (article.isIntersecting){ //감시중인 박스가 나타날 때..
-        article.target.style.opacity = 1;
-      } else{ //감시중인 박스가 사라질 때...
-        article.target.style.opacity = 0;
-      }
-    })})
-    document.querySelectorAll('article').forEach((article)=>{observe.current.observe(article)})
-  },[]);
-  return(      
-    <div className='home_page'>
-      <TailwindCSS value="mt-32"/>
-      <Banner/>
-      <TailwindCSS value="mt-52 mb-40 border-b border-gray-300"/>
-      <RecipePreview/>
-      <TailwindCSS value="mt-40 mb-40 border-b border-gray-300"/>
-      <CustomPreview/>
-      <TailwindCSS value="mt-40 mb-40 border-b border-gray-300"/>
-      <MyBagPreview/>
-      <TailwindCSS value="mt-40 mb-40 border-b border-gray-300"/>
+//Hompage is Server Component
+import Home from './(client-component)/home';
+
+export default async function Page() {
+
+  const recipeData = await fetch("http://localhost:3000/api/recipedata",{
+    method:"POST",
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+      page_size:6,
+      sorts:[{"property":"taste","direction":"ascending"}],
+      filter:{"property":"type","select":{"equals":"Cocktell"}}
+    })
+  })
+  const recipeList = await recipeData.json();
+  const customData = await fetch("http://localhost:3000/api/customdata",{
+    method:"POST",
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+      page_size:3,
+      filter:{"property":"type","select":{"equals":"Custom"}}
+    })
+  })
+  const customList = await customData.json();
+  const materialData = await fetch("http://localhost:3000/api/materialdata",{
+    method:"POST",
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+      page_size:100
+    })
+  })
+  const materialList = await materialData.json();
+  return (
+    <div className='home_page'> {/* Home Component : Client Component */}
+      <Home data={{
+        recipeData: recipeList,
+        customData: customList,
+        materialData:materialList,
+      }} />
+      <div className="mt-40 mb-40 border-b border-gray-300"></div>
     </div>
   );
 };
-function TailwindCSS(props){
-  return(
-    <div className={props.value}></div>
-  )
-}
