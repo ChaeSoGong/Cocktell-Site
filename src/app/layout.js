@@ -4,7 +4,6 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { BiSolidCalculator } from "react-icons/bi";
 import { noto_sans, playfair_display, diphylleia } from './fonts'
 import Header from './(client-component)/header.js' //Header Component
-import { Diphylleia } from 'next/font/google';
 
 export const metadata = {
   title: 'CockTell 칵텔',
