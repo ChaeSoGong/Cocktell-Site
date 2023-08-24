@@ -20,7 +20,6 @@ export default async function CustomRecipe() {
     })
   })
   const cocktailData = await cocktailPromise.json();
-  // const cocktailData = await cocktailPromise;
   return (
       <div className="custom_container">
         {cocktailData.map((data=>{
