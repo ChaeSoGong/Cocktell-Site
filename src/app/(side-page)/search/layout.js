@@ -34,14 +34,9 @@ export function Filter(){
 
     // 검색하기
     const searchSomething = async () =>{
-      var original = '/search/'+search
-      var before=encodeURIComponent(original) // 검색어만 encode 
+      var before=encodeURIComponent(search) // 검색어만 encode 
 
-      // var after = decodeURIComponent(before)
-      router.push('${before}')
-      console.log(original)
-      console.log(before)
-
+      router.push(`/search/${before}`)
 
     //   router.push({
     //     pathname: `/search/${search}`,
@@ -93,8 +88,8 @@ export function Filter(){
         </div>
         <div className='layout_remain_container'>
         <div className="layout_remain_box">
-        <h2 className='layout_txt_3'>최근 검색어</h2>
-        <FaSearch className='layout_just_icon' />
+        {/* <h2 className='layout_txt_3'>최근 검색어</h2> */}
+        {/* <FaSearch className='layout_just_icon' /> */}
         </div>
         </div>
 

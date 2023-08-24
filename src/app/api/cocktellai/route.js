@@ -25,7 +25,7 @@ export async function POST(request, response){
             {role: "assistant", content:answerForm},
             {role: "user",content: prompt},
         ],
-        max_tokens:150,
+        max_tokens:150, 
     });
     const result = JSON.parse(res.choices[0].message.content);
     return NextResponse.json(result);

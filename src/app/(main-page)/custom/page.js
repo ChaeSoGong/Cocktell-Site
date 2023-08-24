@@ -1,3 +1,5 @@
+import { getCustomData } from "../../../../휴지통/custom.get";
+import { cocktailsFETCH } from "../../../../휴지통/route"
 import { blurURL } from "@/config";
 import Image from 'next/image'
 import Link from "next/link";
@@ -29,12 +31,14 @@ export default async function CustomRecipe() {
 
               <div className="custom_img_box">
                 <div className="custom_img">
+                  {/* 두번쨰 */}
                     <Link href={`/recipe/${data.id}`}>
                       <Image src={data.image} alt={data.name} placeholder="blur" blurDataURL={blurURL}
                       fill={true} sizes="265"></Image>
                     </Link>
                 </div>
-                <div className="custom_caption">
+                <div className="custom_caption"> 
+                {/* //첫번째  & 두번쟤 & 3세번쨰*/}
                   <div className="custom_caption_item">
                     <h3>자세히 보기</h3>
                   </div>

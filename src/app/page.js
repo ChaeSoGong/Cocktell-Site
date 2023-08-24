@@ -2,7 +2,6 @@
 import Home from './(client-component)/home';
 
 export default async function Page() {
-
   const recipeData = await fetch("http://localhost:3000/api/recipedata",{
     method:"POST",
     headers:{

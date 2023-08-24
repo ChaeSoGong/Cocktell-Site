@@ -46,6 +46,8 @@ export default async function Search() {
   const recipeList = await recipePromise.json();
   //칵테일 레시피 배열 이름 = recipeList / map 함수로 활용하세용
 
+
+
   return (
     <>
       <div className="search_box">
@@ -57,9 +59,11 @@ export default async function Search() {
                 <div className="search_popular_img_container">
                   <Link href={`/recipe/${num.id}`} >
                     <img src={num.image} alt={num.name} fill="true" sizes="300" />
-                    {/* grid flex처럼 쓰는거 recipe css안에 있음 */}
                   </Link>
                 </div>
+                  <div className="search_popular_caption"> 
+                    <h3>자세히 보기</h3>
+                  </div>
                 <Link href={`/recipe/${num.id}`} className="search_popular_item_img">
                   <div className="search_popular_item_infoBox">
                     <h2 className="search_popular_item_name">{num.name}</h2>
@@ -68,7 +72,6 @@ export default async function Search() {
                       <div className="search_popular_item_left">
                         <h3 className="search_popular_item_level_txt">제작 난이도</h3>
                         <div className="search_popular_item_star text-yellow-500">
-                          {num.level === '1' ? "★☆☆☆☆" : null}
                           {num.level === '2' ? "★★☆☆☆" : null}
                           {num.level === '3' ? "★★★☆☆" : null}
                           {num.level === '4' ? "★★★★☆" : null}
@@ -94,11 +97,17 @@ export default async function Search() {
           {materialList.map((num) => {
             return (<>
               <div className="search_material_item">
+              
                 <div className="search_img">
+
                   <img src={num.image} alt={num.name} fill="true" sizes="300" />
+                
+                </div>
+
+                <div className="search_caption">
+                 <h2 className="search_material_name">{num.name}</h2>
                 </div>
                 <div>
-                  <h2 className="search_material_name">{num.name}</h2>
                 </div>
               </div>
             </>

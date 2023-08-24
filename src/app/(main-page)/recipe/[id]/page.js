@@ -1,5 +1,9 @@
 import { blurURL } from '@/config';
 import Image from 'next/image'
+import { BsShareFill } from "react-icons/bs";
+import React from 'react';
+import Share from '@/app/(client-component)/share';
+
 export default async function RecipeDetail(props) {
   const id = props.params.id;
   // const cocktail = await getRecipeData('id', id);
@@ -148,6 +152,8 @@ export default async function RecipeDetail(props) {
 
   }
 
+
+
   return (
     <div>
       <div className='recipe_detail_top'>
@@ -177,7 +183,7 @@ export default async function RecipeDetail(props) {
 
           <div className='recipe_detail_top_txt_item'>
             <h3>조주 기법</h3>
-            <h4><SkillName/></h4>
+            <h4><SkillName /></h4>
           </div>
 
           <div className='recipe_detail_top_txt_item'>
@@ -196,7 +202,11 @@ export default async function RecipeDetail(props) {
       <div className='recipe_detail_bottom'>
         <div className='recipe_detail_bottom_name'>
           <h3><BaseName /></h3>
-          <h2>{cocktailData.name}</h2>
+          <div className='recipe_detail_bottom_name_1'>
+            <h2>{cocktailData.name}</h2>
+           <Share></Share> 
+           {/* client */}
+          </div>
           <h3>{`"${cocktailData.comment}"`}</h3>
         </div>
         <div className='recipe_detail_bottom_item_box'>

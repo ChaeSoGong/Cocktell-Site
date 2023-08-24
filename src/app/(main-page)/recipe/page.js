@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { blurURL } from "@/config";
+import Share from '@/app/(client-component)/share'
 
 
 //Develop by 임채윤
@@ -29,11 +30,13 @@ export default function Recipe() {
       <div className="recipe_skeleton_item"></div>
     </div>
   );
+
   //새로운 filter값이 입력되면 그에 맞게 filter 설정이 변경되고, 새로운 recipeList를 요청함
   useEffect(() => {
     const getRecipe = async () => {
       // console.log(recipeFilter)
       // console.log(mainmaterailFilter)
+      // console.log(itemCount)
 
       let options = { //*const로 적혀있어서 값이 변경되지 않는 대참사가 일어났었음 2시간 투자함*
         method: 'POST',
@@ -49,6 +52,8 @@ export default function Recipe() {
               { "and": recipeFilter }
             ]
           },
+          // { "property": "mainmaterial", "multi_select": { "contains": "Cocktell" } },
+          
           sorts: [
             {
               "property": "id",
@@ -62,9 +67,9 @@ export default function Recipe() {
       setCocktailData(await dataPromise.json());
     }
     getRecipe();
-  }, [recipeFilter]);
+  },[itemCount,recipeFilter]);
 
-  useEffect(() => {
+  useEffect(() => { 
     setContent(
       <div className="recipe_container">
         {cocktailData.map((data => {
@@ -129,12 +134,16 @@ export default function Recipe() {
   return (
     <div className="recipe_page">
       <Logo></Logo> {/* Develop by 임채윤 */}
+
       <Filter setRecipeFilter={setRecipeFilter} setMainmaterailFilter={setMainmaterailFilter}></Filter> {/* Develop by 장소현 */}
       {content} {/* Develop by 임채윤 */}
-      <MoreContent itemCount={itemCount} setItemCount={setItemCount} ></MoreContent>
+      <MoreContent itemCount={itemCount} setItemCount={setItemCount} ></MoreContent>{/* Develop by 장소현*/}
+      {/* <CopyURL>    </CopyURL> */}
+      {/* <Share className='recipe_detail_bottom_name_icon'/>    */}
     </div>
   )
 }
+
 function RecipeItem(props) {
   return (
     <div className="recipe_item" key={props.data.id}>
@@ -260,12 +269,6 @@ export function Filter(props) {
     }
   }
 
-  // const [mainmaterail, setMainmaterail] = useState([])
-  // const [level, setLevel] = useState(0);
-  // const [min, setMin] = useState(0);
-  // const [max, setMax] = useState(0);
-  // const [taste, setTaste] = useState([])
-  //   {type:cocktell} && [[base:진 && level:2] || [base:럼 && level:2]]
 
   const pushSubmit = (event) => {
     event.preventDefault();
@@ -299,7 +302,6 @@ export function Filter(props) {
       input.push(inputItem)
 
     })
-    // setMainmaterailFilter mainmaterailFilter
 
     //mainmaterial
     var mainInput = ([])
@@ -313,9 +315,6 @@ export function Filter(props) {
     }
 
     props.setMainmaterailFilter(mainInput)
-
-    // props.setMainmaterailFilter()
-
 
 
     var newFilter = []
@@ -413,21 +412,22 @@ export function Filter(props) {
         </div>
       </div>
       <div>
-        {/* <span className="bg-red-100">칵텔 랭킹순</span> */}
       </div>
     </>
   )
 }
-//Develop by 임채윤
+
+//Develop by 장소현
 export function MoreContent(props) {
   const addItem = () => {
-
+    var item = props.itemCount
+    console.log(item)
+    item = item + 5
+    props.setItemCount(item)
   }
   return (
-    <div>
-      <button value={'컨텐츠 추가하기'}></button>
+    <div className="recipe_moreview">
+      <input type="button" value={'더보기'} onClick={addItem} className="recipe_moreview_button"></input>
     </div>
   )
 }
-
-

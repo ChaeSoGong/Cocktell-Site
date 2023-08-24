@@ -67,6 +67,7 @@ export async function POST(request, response){ //Query한 Recipe List 가져오�
         },
         body:JSON.stringify(filterConfig),
     }
+    // console.log(options)
     const res = await fetch(`https://api.notion.com/v1/databases/${RECIPE_DATABASE_ID}/query`,options);
     if (!res.ok){
         throw new Error("데이터 가져오기 실패");

@@ -4,7 +4,7 @@ export default async function UserManage() {
     // console.log(usersData);
     return (
       <div className='user-manage'>
-{/*         {usersData.map((user)=>{
+        {/* {usersData.map((user)=>{
             return(<div key={user.id} className='m-4 bg-gray-300'>
                 {`상태 : ${user.state}`}<br/>
                 {`이메일 : ${user.email}`}<br/>

@@ -1,10 +1,10 @@
-import { MATERIAL_DATABASE_ID, TOKEN } from "@/config";
+import { RECIPE_DATABASE_ID, TOKEN } from "@/config";
 import { NextResponse } from "next/server";
 
 export async function POST(request){
     console.log('Server : All Cocktail Recipe fetching Start...');
     const req = await request.json();
-    console.log(req);
+    // console.log(req);
     const options = {
         method: 'POST',
         headers: {
@@ -15,7 +15,8 @@ export async function POST(request){
         },
         body:JSON.stringify(req),
     }
-    const res = await fetch(`https://api.notion.com/v1/databases/${MATERIAL_DATABASE_ID}/query`,options);
+    // console.log(options);
+    const res = await fetch(`https://api.notion.com/v1/databases/${RECIPE_DATABASE_ID}/query`,options);
     if (!res.ok){
         throw new Error("데이터 가져오기 실패");
     }

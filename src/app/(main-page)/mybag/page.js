@@ -9,449 +9,343 @@ import { blurURL } from "@/config";
 
 //Develop by 임채윤
 export default function MyBag() {
-  const [mode, setMode] = useState('ALCOHOL');
-  const [result, setResult] = useState(<></>);
-  const [materialData, setMaterialData] = useState([]);
-  const [cocktailData, setCocktailData] = useState(null);
-
-  //Material Data 가져오기
-  useEffect(() => {
-    const getMaterial = async () => {
-      const materialPromise = await fetch('/api/materialdata', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({})
-      });
-      const materialList = await materialPromise.json();
-      const alcoholList = await materialList.filter((material) => (material.type === "mainmaterial"));
-      const drinkList = await materialList.filter((material) => (material.subtype === "sparkling" || material.subtype === "juice"));
-      const dairyList = await materialList.filter((material) => (material.subtype === "dairy"));
-      const condimentList = await materialList.filter((material) => (material.subtype === "condiment" && material.id !== Number(45) && material.id !== Number(44)));
-      setMaterialData([
-        { alcochol: alcoholList },
-        { drink: drinkList },
-        { dairy: dairyList },
-        { condiment: condimentList }
-      ])
-    }
-    getMaterial();
-  }, [])
-  useEffect(() => {
-    if (cocktailData === null) { setCocktailData([]) }
-  }, [])
-  return (
-    <div>
-      <MyBagFilter materials={materialData}></MyBagFilter>
-    </div>
-  )
-
-  /*
-  const [itemCount, setItemCount] = useState(12);
-  const [mainmaterailFilter, setMainmaterailFilter] = useState([]);
-  const [recipeFilter, setRecipeFilter] = useState([]);
-  const [cocktailData, setCocktailData] = useState([]);
+  const [filter, setFilter] = useState([]); //필터 설정
+  const [filterConfig, setFilterConfig] = useState(null); //데이터 가져오기 위한 애
   const [content, setContent] = useState(null);
-  //새로운 filter값이 입력되면 그에 맞게 filter 설정이 변경되고, 새로운 recipeList를 요청함
+  const [cocktailData, setCocktailData] = useState(null);
   useEffect(() => {
-    const getRecipe = async () => {
-      console.log(recipeFilter)
-      console.log(mainmaterailFilter)
-
-      let options = { //*const로 적혀있어서 값이 변경되지 않는 대참사가 일어났었음 2시간 투자함*
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          page_size: itemCount,
-          filter: {
-            "and": [//기본으로 Cocktell 레시피만 보여줌
-              { "property": "type", "select": { "equals": "Cocktell" } },
-              { "or": mainmaterailFilter },
-              { "and": recipeFilter }
-            ]
-          },
-          sorts: [
-            {
-              "property": "id",
-              "direction": "ascending"
-            }
-          ]
+    if (filterConfig !== null) {
+      // console.log(filterConfig, '여기')
+      const getRecipe = async () => {
+        const recipePromise = await fetch('/api/allcocktaildata', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            page_size: 6,
+            filter:
+              { "or": filterConfig }
+          }),
         })
-
-      }
-      const dataPromise = await fetch('http://localhost:3000/api/recipedata', options);
-      setCocktailData(await dataPromise.json());
+        const recipeData = await recipePromise.json();
+        setCocktailData(recipeData);
+      };
+      getRecipe();
     }
-    getRecipe();
-  }, [recipeFilter]);
-
+  }, [filterConfig])
   useEffect(() => {
-    setContent(
-      <div className="recipe_container">
-        {cocktailData.map((data => {
-          return (
-            <div className="recipe_item" key={data.id}>
-              <div className="recipe_img_box">
-                <div className="recipe_img">
-                  <Link href={`/recipe/${data.id}`}>
-                    <Image src={data.image} alt={data.name} placeholder="blur" blurDataURL={blurURL}
-                      fill={true} sizes="265"></Image>
-                  </Link>
-                </div>
-                <div className="recipe_caption">
-                  <div className="recipe_tag_container">
-                    {data.taste.map((taste, i) => {
-                      if (i > 2) { return null };
-                      return (
-                        <div key={i} className="recipe_tag_item tag_taste"># {taste}</div>
-                      )
-                    })}
-                  </div>
-                  <div className="recipe_tag_container">
-                    {data.skill.map((skill, i) => {
-                      return (
-                        <div key={i} className="recipe_tag_item tag_skill"># {skill}</div>
-                      )
-                    })}
-                  </div>
-                  <div className="recipe_tag_container">
-                    <div className="recipe_tag_item tag_glass"># {data.glass} 글라스</div>
-                  </div>
-                </div>
-              </div>
-              <div className="recipe_infor_box">
-                <div className="recipe_infor">
-                  <div className="recipe_name">{data.name}</div>
-                </div>
-                <div className="recipe_comment">{data.comment}</div>
-                <div className="recipe_detail">
-                  <div className="recipe_difficulty">
-                    제작 난이도
-                    <span className="text-xs border h-4 text-gray-400" style={{ margin: "0 8px" }}></span>
-                    <div className="recipe_star text-yellow-500">
-                      {data.level === '1' ? "★☆☆☆☆" : null}
-                      {data.level === '2' ? "★★☆☆☆" : null}
-                      {data.level === '3' ? "★★★☆☆" : null}
-                      {data.level === '4' ? "★★★★☆" : null}
-                      {data.level === '5' ? "★★★★★" : null}
-                    </div>
-                  </div>
-                  <div className="recipe_alcohol text-gray-600 mr-2">{data.degree}%</div>
-                </div>
-              </div>
+    if (content !== null) {
+      setContent(<>
+        <h2 style={{ backgroundColor: "#ffffff" }}>스크롤을 내려 레시피를 확인해보세요</h2>
+        <div className="mybag_result">
+          {cocktailData.map(item => <div className="mybag_result_item" key={item.id}>
+            <div className="mybag_result_img">
+              <Image src={item.image} alt={item.name} fill sizes="300"></Image>
             </div>
-          )
-        }))}
-      </div>
-    )
+            <div className="mybag_result_text">{item.name}</div>
+          </div>
+          )}
+        </div>
+      </>)
+    } else { setContent(<h2>재료를 골라 레시피를 찾아보세요</h2>) }
   }, [cocktailData])
-*/
   return (
-    <div className="recipe_page">
-      {/* <Filter setRecipeFilter={setRecipeFilter} setMainmaterailFilter={setMainmaterailFilter}></Filter> Develop by 장소현 */}
-      <Filter></Filter> {/* Develop by 장소현 */}
-      {result} {/* Develop by 임채윤 */}
+    <div className="mybag_page">
+      <MyBagFilter setFilter={setFilter} setFilterConfig={setFilterConfig}></MyBagFilter>
+      {content}
     </div>
   )
 }
 
 function MyBagFilter(props) {
-  const dataList = props.material
-  console.log(dataList)
-  // const [items, setItems] = useState(<></>);
-  const [items, dispatchMode] = useReducer(reducer, []);
-  const [selectItem, setSelectItem] = useState([]);
+  //재료데이터 목록
+  const [materialData, setMaterialData] = useState([]);
+  useEffect(() => {
+    // console.log(tagList.alcohol.length === 0)
+    if (materialData.length === 0) {
+      const getMaterial = async () => {
+        const materialPromise = await fetch('/api/materialdata', {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({})
+        });
+        const materialList = await materialPromise.json();
+        const alcoholList = await materialList.filter((material) => (material.type === "mainmaterial"));
+        const drinkList = await materialList.filter((material) => (material.subtype === "sparkling" || material.subtype === "juice"));
+        const dairyList = await materialList.filter((material) => (material.subtype === "dairy"));
+        const fruitVeggieList = await materialList.filter((material) => (material.subtype === "fruit" || material.subtype === "vegitable"));
+        const condimentList = await materialList.filter((material) => (material.subtype === "condiment" && material.id !== Number(45) && material.id !== Number(44)));
+        setMaterialData([alcoholList, drinkList, dairyList, condimentList, fruitVeggieList])
+      }
+      getMaterial();
+    }
+    else { //한번 로딩이 되어있다면...
+      console.log(materialData);
+    }
+  }, [materialData])
 
-  //mode("모드") 값이 입력되면 그 모드에 따라 아이템 리스트를 변경해줌
-  function reducer(mode, action) {
-    switch(action.type){
-      case "ALCOHOL":{return console.log('alcohol')}
-      case "DRINK":{return console.log('drink')}
-      case "DAIRY":{return console.log('dairy')}
-      case "CONDIMENT":{return console.log('condiment')}
+  const [tags, setTags] = useState([])
+  const [alcoholTags, setAlcoholTags] = useState([])
+  const [drinkTags, setDrinkTags] = useState([])
+  const [dairyTags, setDairyTags] = useState([])
+  const [condimentTags, setCondimentTags] = useState([])
+  const [fruitVeggieTags, setFruitVeggieTags] = useState([])
+  const onAlcoholChange = (e) => {
+    if (e.target.checked) {
+      const input = e.target.value;
+      let newTagList = [...alcoholTags];
+      newTagList.push(input);
+      setAlcoholTags(newTagList);
+      let newAllTagList = [...tags];
+      newAllTagList.push(input);
+      setTags(newAllTagList);
+    }
+    else if (!e.target.checked) {
+      let newTagList = [...alcoholTags];
+      newTagList = newTagList.filter(item => (item !== e.target.value))
+      setAlcoholTags(newTagList)
+      let newAllTagList = [...tags];
+      newAllTagList = newAllTagList.filter(item => (item !== e.target.value))
+      setTags(newAllTagList)
     }
   }
-return (
-  <div className="mybag_filter_box">
-    <div className="mybag_filter_container">
+  const onDrinkChange = (e) => {
+    if (e.target.checked) {
+      const input = e.target.value;
+      let newTagList = [...drinkTags];
+      newTagList.push(input);
+      setDrinkTags(newTagList);
+      let newAllTagList = [...tags];
+      newAllTagList.push(input);
+      setTags(newAllTagList);
+    }
+    else if (!e.target.checked) {
+      let newTagList = [...drinkTags];
+      newTagList = newTagList.filter(item => (item !== e.target.value))
+      setDrinkTags(newTagList)
+      let newAllTagList = [...tags];
+      newAllTagList = newAllTagList.filter(item => (item !== e.target.value))
+      setTags(newAllTagList)
+    }
+  }
+  const onDairyChange = (e) => {
+    if (e.target.checked) {
+      const input = e.target.value;
+      let newTagList = [...dairyTags];
+      newTagList.push(input);
+      setDairyTags(newTagList);
+      let newAllTagList = [...tags];
+      newAllTagList.push(input);
+      setTags(newAllTagList);
+    }
+    else if (!e.target.checked) {
+      let newTagList = [...dairyTags];
+      newTagList = newTagList.filter(item => (item !== e.target.value))
+      setDairyTags(newTagList)
+      let newAllTagList = [...tags];
+      newAllTagList = newAllTagList.filter(item => (item !== e.target.value))
+      setTags(newAllTagList)
+    }
+  }
+  const onCondimentChange = (e) => {
+    if (e.target.checked) {
+      const input = e.target.value;
+      let newTagList = [...condimentTags];
+      newTagList.push(input);
+      setCondimentTags(newTagList);
+      let newAllTagList = [...tags];
+      newAllTagList.push(input);
+      setTags(newAllTagList);
+    }
+    else if (!e.target.checked) {
+      let newTagList = [...condimentTags];
+      newTagList = newTagList.filter(item => (item !== e.target.value))
+      setCondimentTags(newTagList)
+      let newAllTagList = [...tags];
+      newAllTagList = newAllTagList.filter(item => (item !== e.target.value))
+      setTags(newAllTagList)
+    }
+  }
+  const onFruitVeggieChange = (e) => {
+    if (e.target.checked) {
+      const input = e.target.value;
+      let newTagList = [...fruitVeggieTags];
+      newTagList.push(input);
+      setFruitVeggieTags(newTagList);
 
-      <div className="mybag_filter_title">재료</div>
+      let newAllTagList = [...tags];
+      newAllTagList.push(input);
+      setTags(newAllTagList);
+    }
+    else if (!e.target.checked) {
+      let newTagList = [...fruitVeggieTags];
+      newTagList = newTagList.filter(item => (item !== e.target.value))
+      setFruitVeggieTags(newTagList)
+      let newAllTagList = [...tags];
+      newAllTagList = newAllTagList.filter(item => (item !== e.target.value))
+      setTags(newAllTagList)
+    }
+  }
 
-      <div className="mybag_filter_main">
-        <input type="button" onClick={()=>{dispatchMode({type:"ALCOHOL"})}} value={'술'} className="mybag_filter_sub"></input>
-        <input type="button" onClick={()=>{dispatchMode({type:"DRINK"})}} value={'음료'} className="mybag_filter_sub"></input>
-        <input type="button" onClick={()=>{dispatchMode({type:"DAIRY"})}} value={'유제품'} className="mybag_filter_sub"></input>
-        <input type="button" onClick={()=>{dispatchMode({type:"CONDIMENT"})}} value={'향신료 & 소스'} className="mybag_filter_sub"></input>
+  /*   const onTagChange = (e) => {
+      // console.log(e.target.value)
+      if(e.target.checked){
+        const input = e.target.value;
+        let newTagList = [...tags];
+        newTagList.push(input);
+        setTags(newTagList);
+      }
+      else if (!e.target.checked) {
+        let newTagList = [...tags];
+        newTagList = newTagList.filter(item=>( item !== e.target.value ))
+        setTags(newTagList)
+      }
+    } */
+
+  const onFiltering = (e) => {
+    e.preventDefault();
+    if (alcoholTags.length === 0 && drinkTags.length === 0 && dairyTags.length === 0 && condimentTags.length === 0 && fruitVeggieTags.length === 0) {
+      return alert("재료를 입력해주세요")
+    }
+    let input = []
+    let inputItem = null
+    tags.map(item => {
+      inputItem = ({ "property": "mainmaterial", "multi_select": { "contains": item } })
+      input.push(inputItem)
+      inputItem = ({ "property": "submaterial", "multi_select": { "contains": item } })
+      input.push(inputItem)
+      inputItem = ({ "property": "garnish", "multi_select": { "contains": item } })
+      input.push(inputItem)
+    })
+    // setFilterConfig(
+    //   {
+    //     "or": [{ "property": "mainmaterial", "multi_select": { "contains": "필터" } },
+    //     { "property": "submaterial", "multi_select": { "contains": "필터" } },
+    //     { "property": "garnish", "multi_select": { "contains": "필터" } },
+    //     ]
+    //   }
+    //여기
+    // props.setFilter([alcoholTags, drinkTags, dairyTags, condimentTags, fruitVeggieTags])
+    // props.setFilter(tags)
+    props.setFilterConfig(input)
+  }
+  return (
+    <div className="mybag_filter_box">
+      <div className="mybag_filter_container">
+        <div className="mybag_filter_title">재료</div>
+
+
+        <div className="mybag_filter_main">
+          <div className="mybag_filter_category"> {/* 술 카테고리 */}
+            <input type="radio" className="mybag_filter_radio" name="mybag_category" id="alcohol" value={'ALCOHOL'} />
+            <label htmlFor="alcohol">술</label>
+            <div className="mybag_filter_item">
+              {materialData[0]?.map(item => <label className="mybag_tag" key={item.id}><input type="checkbox" onClick={onAlcoholChange} value={item.name} /><span>{item.name}</span></label>)}
+            </div>
+          </div>
+          <div className="mybag_filter_category"> {/* 음료 카테고리 */}
+            <input type="radio" className="mybag_filter_radio" name="mybag_category" id="drink" value={'DRINK'} />
+            <label htmlFor="drink">음료</label>
+            <div className="mybag_filter_item">
+              {materialData[1]?.map(item => <label className="mybag_tag" key={item.id}><input type="checkbox" onClick={onDrinkChange} value={item.name} /><span>{item.name}</span></label>)}
+            </div>
+          </div>
+          <div className="mybag_filter_category"> {/* 유제품 카테고리 */}
+            <input type="radio" className="mybag_filter_radio" name="mybag_category" id="dairy" value={'DAIRY'} />
+            <label htmlFor="dairy">유제품</label>
+            <div className="mybag_filter_item">
+              {materialData[2]?.map(item => <label className="mybag_tag" key={item.id}><input type="checkbox" onClick={onDairyChange} value={item.name} /><span>{item.name}</span></label>)}
+            </div>
+          </div>
+          <div className="mybag_filter_category"> {/* 향신료 카테고리 */}
+            <input type="radio" className="mybag_filter_radio" name="mybag_category" id="condiment" value={'CONDIMENT'} />
+            <label htmlFor="condiment">향신료 & 소스</label>
+            <div className="mybag_filter_item">
+              {materialData[3]?.map(item => <label className="mybag_tag" key={item.id}><input type="checkbox" onClick={onCondimentChange} value={item.name} /><span>{item.name}</span></label>)}
+            </div>
+          </div>
+          <div className="mybag_filter_category"> {/* 과일 & 야채 카테고리 */}
+            <input type="radio" className="mybag_filter_radio" name="mybag_category" id="fruitveggie" value={'FRUITVEGGIE'} />
+            <label htmlFor="fruitveggie">과일 & 야채</label>
+            <div className="mybag_filter_item">
+              {materialData[4]?.map(item => <label className="mybag_tag" key={item.id}><input type="checkbox" onClick={onFruitVeggieChange} value={item.name} /><span>{item.name}</span></label>)}
+            </div>
+          </div>
+        </div>
+        <div className="mybag_filter_background"></div>
+        <div className="mybag_filter_selected">
+          <h2 className="mybag_select_text">선택된 재료들</h2>
+          <div className="mybag_select_tag_container">
+            {tags.map((item, i) => <span key={i} className="mybag_select_tag">{item}</span>)}
+            {/*             {alcoholTags.map((item,i)=><span key={i} className="mybag_select_tag">{item}</span>)}
+            {drinkTags.map((item,i)=><span key={i} className="mybag_select_tag">{item}</span>)}
+            {dairyTags.map((item,i)=><span key={i} className="mybag_select_tag">{item}</span>)}
+            {condimentTags.map((item,i)=><span key={i} className="mybag_select_tag">{item}</span>)}
+            {fruitVeggieTags.map((item,i)=><span key={i} className="mybag_select_tag">{item}</span>)} */}
+          </div>
+          <input type="button" value={'찾아보기'} className="mybag_submit" onClick={onFiltering} />
+        </div>
       </div>
-      
-      <div className="mybag_filter_itemlist">a{items}</div>
-      <div className="mybag_filter_selected">b{selectItem}</div>
-
     </div>
+  )
+}
+
+
+
+// -------------채윤 휴지통 --------------- //
+
+
+/*   const onTagCheck = (e) => {
+    e.preventDefault();
+    console.log(e.target.innerText);
+    let newTags = [...tags];
+    newTags.push(e.target.innerText);
+    setTags(newTags);
+    console.log(tags, newTags,'hi')
+  } */
+
+/* function Alcohol(props) {
+return (
+  <div className="mybag_filter_item" id="alcohol_item">
+    {props.data?.map(item =>
+      <label className="mybag_tag" key={item.id}>
+        <input type="checkbox" /><span>{item.name}</span>
+      </label>
+    )}
   </div>
 )
 }
-
-
-
-//Develop by 장소현
-export function Filter(props) {
-
-  /*
-    const [mainmaterail, setMainmaterail] = useState([])
-    const [level, setLevel] = useState(0);
-    const [min, setMin] = useState(0);
-    const [max, setMax] = useState(100);
-    const [taste, setTaste] = useState([]);
-  
-    // 베이스 > 배열
-    const changeBase = (event) => {
-      if (event.target.checked) {
-        const input = event.target.value
-        const newInputBase = [...mainmaterail]
-        newInputBase.push(input)
-        setMainmaterail(newInputBase);
-      }
-      else if (!event.target.checked) {
-        let newInputBase = [...mainmaterail];
-        let result = newInputBase.filter((item) => ((item) !== event.target.value))
-        setMainmaterail(result)
-      }
-  
-    }
-    // 제작 난이도
-    const changeLevel = (event) => {
-      setLevel(event.target.value)
-    }
-  
-    // 알코올 도수
-    const changeInputMin = (event) => { //min max 값 입력 됐을 때
-      setMin(event.target.value)
-    }
-  
-    const changeInputMax = (event) => { //min max 값 입력 됐을 때
-      setMax(event.target.value)
-    }
-  
-    // 해시태그 > 배열
-  
-    const changeTag = (event) => {
-      if (event.target.checked) {
-        const input = event.target.value
-        const newInputTag = [...taste]
-        newInputTag.push(input)
-        setTaste(newInputTag);
-      }
-      else if (!event.target.checked) {
-        let newInputTag = [...taste];
-        let result = newInputTag.filter((item) => ((item) !== event.target.value))
-        setTaste(result)
-      }
-    }
-  
-    const pushSubmit = (event) => {
-      event.preventDefault();
-      if (min < 0 || min > 100) {
-        return alert('잘못된 최솟값 범위입니다.(0~100)')
-      }
-      if (max < 0 || max > 100) {
-        return alert('잘못된 최솟값 범위입니다.(0~100)')
-      }
-      if (max < min) {
-        return alert('최댓값은 최솟값보다 커야 합니다.')
-      }
-      const input = ([])
-      let inputItem = (null)
-  
-      //level
-      if (level != 0) {//0이면 포함시키면 안됨
-        inputItem = ({ "property": "level", "select": { "equals": level } })
-        input.push(inputItem)
-  
-      }
-  
-      //degree
-      inputItem = ({ "property": "degree", "number": { "greater_than_or_equal_to": Number(min) } })
-      input.push(inputItem)
-      inputItem = ({ "property": "degree", "number": { "less_than_or_equal_to": Number(max) } })
-      input.push(inputItem)
-  
-      //hashtag
-      taste.map((item) => {
-        inputItem = ({ "property": "taste", "multi_select": { "contains": item } })
-        input.push(inputItem)
-  
-      })
-      // setMainmaterailFilter mainmaterailFilter
-  
-      //mainmaterial
-      var mainInput = ([])
-  
-      if (mainmaterail.length != 0) {
-        var newMainInput = (null)
-        mainmaterail.map((item) => {
-          newMainInput = ({ "property": "mainmaterial", "multi_select": { "contains": item } })
-          mainInput.push(newMainInput)
-        })
-      }
-  
-      props.setMainmaterailFilter(mainInput)
-  
-      // props.setMainmaterailFilter()
-  
-  
-  
-      var newFilter = []
-      input.map((item) => {
-        newFilter.push(item)
-  
-      })
-  
-      props.setRecipeFilter(newFilter)*/
-
-
-
-  return (
-    <>
-      <div className="mybag_dropdown">
-        <div className="mybag_dropdown_content">
-          <div className="mabag_dropdown_base">
-            <h2>베이스</h2>
-            <form className="mybag_dropdown_base_form">
-              {/* <input type="checkbox" name="recipe_base" id="recipe_base_1" value="보드카" onClick={changeBase} className="recipe_dropdown_base_item" />
-              <label htmlFor="recipe_base_1">보드카</label>
-              <input type="checkbox" name="recipe_base" id="recipe_base_2" value="진" onClick={changeBase} />
-              <label htmlFor="recipe_base_2">진</label>
-              <input type="checkbox" name="recipe_base" id="recipe_base_3" value="럼" onClick={changeBase} />
-              <label htmlFor="recipe_base_3">럼</label>
-              <input type="checkbox" name="recipe_base" id="recipe_base_4" value="데킬라" onClick={changeBase} />
-              <label htmlFor="recipe_base_4">데킬라</label>
-              <input type="checkbox" name="recipe_base" id="recipe_base_5" value="위스키" onClick={changeBase} />
-              <label htmlFor="recipe_base_5">위스키</label>
-              <input type="checkbox" name="recipe_base" id="recipe_base_6" value="브랜디" onClick={changeBase} />
-              <label htmlFor="recipe_base_6">브랜디</label>*/}
-              <input type="checkbox" name="recipe_base" id="recipe_base_1" value="보드카" className="recipe_dropdown_base_item" />
-              <label htmlFor="recipe_base_1">보드카</label>
-              <input type="checkbox" name="recipe_base" id="recipe_base_2" value="진" />
-              <label htmlFor="recipe_base_2">진</label>
-              <input type="checkbox" name="recipe_base" id="recipe_base_3" value="럼" />
-              <label htmlFor="recipe_base_3">럼</label>
-              <input type="checkbox" name="recipe_base" id="recipe_base_4" value="데킬라" />
-              <label htmlFor="recipe_base_4">데킬라</label>
-              <input type="checkbox" name="recipe_base" id="recipe_base_5" value="위스키" />
-              <label htmlFor="recipe_base_5">위스키</label>
-              <input type="checkbox" name="recipe_base" id="recipe_base_6" value="브랜디" />
-              <label htmlFor="recipe_base_6">브랜디</label>
-            </form>
-          </div>
-          <div className="mybag_dropdwon_material">
-            <h2>재료</h2>
-            <form>
-              <input type="radio" id="mybag_dropdwon_material_drink" name="material" value="drink" />
-              <label htmlFor="mybag_dropdwon_material_drink">술</label>
-              <input type="radio" id="mybag_dropdwon_material_juice" name="material" value="juice" />
-              <label htmlFor="mybag_dropdwon_material_juice">음료</label>
-              <input type="radio" id="mybag_dropdwon_material_dairy" name="material" value="dairy" />
-              <label htmlFor="mybag_dropdwon_material_dairy"> 유제품</label>
-              <input type="radio" id="mybag_dropdwon_material_condiment" name="material" value="condiment" />
-              <label htmlFor="mybag_dropdwon_material_condiment">향신료 & 소스</label>
-
-              <input type="checkbox" id="mybag_dropdwon_material_drink_list" />
-              <label htmlFor="mybag_dropdwon_material_drink_list">술</label>
-
-            </form>
-          </div>
-          <div className="recipe_dropdown_level">
-            <h2>제작난이도</h2>
-            <form className="recipe_dropdown_level_form" id="recipe_dropdown_level_form">
-              <fieldset>
-                {/* <input type="radio" name="recipe_level" value="5" id="rate1" onClick={changeLevel} />
-                <label htmlFor="rate1">★</label>
-                <input type="radio" name="recipe_level" value="4" id="rate2" onClick={changeLevel} />
-                <label htmlFor="rate2">★</label>
-                <input type="radio" name="recipe_level" value="3" id="rate3" onClick={changeLevel} />
-                <label htmlFor="rate3">★</label>
-                <input type="radio" name="recipe_level" value="2" id="rate4" onClick={changeLevel} />
-                <label htmlFor="rate4">★</label>
-                <input type="radio" name="recipe_level" value="1" id="rate5" onClick={changeLevel} />
-                <label htmlFor="rate5">★</label> */}
-                <input type="radio" name="recipe_level" value="5" id="rate1" />
-                <label htmlFor="rate1">★</label>
-                <input type="radio" name="recipe_level" value="4" id="rate2" />
-                <label htmlFor="rate2">★</label>
-                <input type="radio" name="recipe_level" value="3" id="rate3" />
-                <label htmlFor="rate3">★</label>
-                <input type="radio" name="recipe_level" value="2" id="rate4" />
-                <label htmlFor="rate4">★</label>
-                <input type="radio" name="recipe_level" value="1" id="rate5" />
-                <label htmlFor="rate5">★</label>
-              </fieldset>
-            </form>
-          </div>
-          <div className="recipe_dropdown_degree">
-            <h2>알코올 도수</h2>
-            <div className="recipe_dropdown_degree_box">
-              {/* <input type="number" placeholder="최솟값" className="recipe_dropdown_degree_num" id="recipe_dropdown_degree_min" onChange={changeInputMin}></input>
-              <h4>이상</h4>
-            </div>
-            <h3>~</h3>
-            <div className="recipe_dropdown_degree_box">
-              <input type="number" placeholder="최댓값" className="recipe_dropdown_degree_num" id="recipe_dropdown_degree_max" onChange={changeInputMax}></input>
-              <h4>이하</h4> */}
-              <input type="number" placeholder="최솟값" className="recipe_dropdown_degree_num" id="recipe_dropdown_degree_min" ></input>
-              <h4>이상</h4>
-            </div>
-            <h3>~</h3>
-            <div className="recipe_dropdown_degree_box">
-              <input type="number" placeholder="최댓값" className="recipe_dropdown_degree_num" id="recipe_dropdown_degree_max"></input>
-              <h4>이하</h4>
-            </div>
-
-
-          </div>
-          <div className="recipe_dropdown_hashtag">
-            <h2>해시태그</h2>
-            <form className="recipe_dropdown_hashtag_form flex justify-between">
-              {/* <input type="checkbox" name="recipe_hashtag" id="recipe_hashtag_1" value="달콤" onClick={changeTag} />
-              <label htmlFor="recipe_hashtag_1"># 달콤</label>
-              <input type="checkbox" name="recipe_hashtag" id="recipe_hashtag_2" value="상큼" onClick={changeTag} />
-              <label htmlFor="recipe_hashtag_2"># 상큼</label>
-              <input type="checkbox" name="recipe_hashtag" id="recipe_hashtag_3" value="새콤" onClick={changeTag} />
-              <label htmlFor="recipe_hashtag_3"># 새콤</label>
-              <input type="checkbox" name="recipe_hashtag" id="recipe_hashtag_4" value="깔끔" onClick={changeTag} />
-              <label htmlFor="recipe_hashtag_4"># 깔끔</label>
-              <input type="checkbox" name="recipe_hashtag" id="recipe_hashtag_5" value="탄산" onClick={changeTag} />
-              <label htmlFor="recipe_hashtag_5"># 탄산</label> */}
-              <input type="checkbox" name="recipe_hashtag" id="recipe_hashtag_1" value="달콤" />
-              <label htmlFor="recipe_hashtag_1"># 달콤</label>
-              <input type="checkbox" name="recipe_hashtag" id="recipe_hashtag_2" value="상큼" />
-              <label htmlFor="recipe_hashtag_2"># 상큼</label>
-              <input type="checkbox" name="recipe_hashtag" id="recipe_hashtag_3" value="새콤" />
-              <label htmlFor="recipe_hashtag_3"># 새콤</label>
-              <input type="checkbox" name="recipe_hashtag" id="recipe_hashtag_4" value="깔끔" />
-              <label htmlFor="recipe_hashtag_4"># 깔끔</label>
-              <input type="checkbox" name="recipe_hashtag" id="recipe_hashtag_5" value="탄산" />
-              <label htmlFor="recipe_hashtag_5"># 탄산</label>
-            </form>
-            <div className="recipe_dropdown_submitBox">
-
-              {/* <form className="recipe_dropdown_submit_form" onSubmit={pushSubmit}>
-                <input type="submit" value="검색하기" className="recipe_dropdown_submit" />
-              </form> */}
-              <form className="recipe_dropdown_submit_form">
-                <input type="submit" value="검색하기" className="recipe_dropdown_submit" />
-              </form>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-      <div>
-      </div>
-    </>
-  )
+function Drink(props) {
+return (
+  <div className="mybag_filter_item" id="drink_item">
+    {props.data?.map(item =>
+      <label className="mybag_tag" key={item.id}>
+        <input type="checkbox" /><span>{item.name}</span>
+      </label>
+    )}
+  </div>
+)
 }
+function Dairy(props) {
+return (
+  <div className="mybag_filter_item" id="dairy_item">
+    {props.data?.map(item =>
+      <label className="mybag_tag" key={item.id}>
+        <input type="checkbox" /><span>{item.name}</span>
+      </label>
+    )}
+  </div>
+)
+}
+function Condiment(props) {
+return (
+  <div className="mybag_filter_item">
+    {props.data?.map(item =>
+      <label className="mybag_tag" key={item.id}>
+        <input type="checkbox" /><span>{item.name}</span>
+      </label>
+    )}
+  </div>
+)
+} */
