@@ -1,6 +1,6 @@
 'use client'
 
-import { usersFETCH } from "../../../../휴지통/route";
+/* import { usersFETCH } from "../../../../휴지통/route" */;
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react"
 export default function SignUp() {
@@ -8,7 +8,7 @@ export default function SignUp() {
   useEffect(()=>{ //Server에서 Users Data를 Client에 가져오기
     const usersClientFETCH = async() => {
         try{
-            await setUserData(await usersFETCH('GET'));
+            await setUserData(/* await usersFETCH('GET') */);
         }catch(error){
             console.log('Client message : Failed Data Fetch!!')
         }
