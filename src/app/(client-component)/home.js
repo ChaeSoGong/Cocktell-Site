@@ -298,31 +298,3 @@ function CocktellAI() {
         </article>
     )
 }
-
-/** Swiper 속성들 
- * slidesPerView:1 //한 슬라이드에 보여줄 개수
- * spaceBetween:6 //슬라이스 사이의 여백
- * loop:false //슬라이드 반복 여부
- * loopAdditionalSlides:1 //슬라이드 반복 시 마지막 슬라이드에서 다음 슬라이드 보이지 않는 현상 수정
- * pagination:false //pager의 여부
- * autoplay:{delay:시간(ms), disableOnInteraction:false} //자동슬라이드 설정 (시간/스와이프 후 자동재생 비활성화 기능)
- * navigation:{nextEl:'swiper-button-next', prevEl:'swiper-button-prev'} //버튼 사용자 지정
- * freeMode:false //슬라이드 넘길 때 위치 고정 여부
- * autoHeigth:true //true라면 슬라이드 래퍼가 현재 활성 슬라이드에 높이에 맞춰 높이 조정
- * resistance:false //슬라이드 터치 저항 여부
- * slideToClickedSlide:true //해당 슬라이드 클릭 시 슬라이드 위치로 이동
- * centeredSlides:true //true시에 슬라이드가 가운데 배치
- * allowTouchMove:true //false면 스와이핑 금지. 버튼으로만 조작 가능
- * watchOverflow:true //슬라이드가 1개일 때 pager, button 숨김 여부
- * slidesOffsetBefore:{숫자} //슬라이드 시작부분 여백
- * slidesOffsetAfter:{숫자} //슬라이드 끝부분 여백
- * pagination:{
- *  el:'.pagination', //페이저 버튼 담을 태그
- *  clickable:'true', //버튼 클릭 여부
- *  type:'bullets', //버튼 모양. bullets와 fraction
- *  renderBullets:function(index, className){
- *      return <a href="#" class='' className=''>+(index+1)+</a>
- *  }
- *  renderFraction:...
- * }
-*/

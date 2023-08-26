@@ -1,6 +1,18 @@
 import { RECIPE_DATABASE_ID, TOKEN } from "@/config";
 import { NextResponse } from "next/server";
 
+/** **Develop by 임채윤**  
+ * Notion DB에 있는 Custom Recipe Data들을 가져오는 API입니다.  
+ * GET으로 가져오면 Recipe를 가져옵니다.  
+ * POST로 가져오면 query를 거친 Recipe List를 가져옵니다.
+ * 
+ * 정렬 혹은 필터링을 하여 Cocktails Data를 가져올 수 있습니다.  
+ * 포함정보 : type(칵텔 or 커스텀), id(고유ID), image(칵테일 사진),  
+ * name(칵테일 이름), comment(한줄평), description(설명), taste(맛;배열),  
+ * degree(알코올 도수), level(난이도 1~5), glass(잔), skill(기법;배열),  
+ * materials(재료; main, sub, garnish가 각각 배열로 저장됨), createdate(생성날짜)
+*/
+
 export async function POST(request, response){ //Query한 Custom List 가져오기
     console.log('Server : Custom List fetch Start...');
     const filterConfig = await request.json();
