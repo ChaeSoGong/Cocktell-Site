@@ -1,6 +1,6 @@
-//Hompage is Server Component
 import Home from './(client-component)/home';
-
+//Develop By 임채윤
+//Hompage is Server Component : 이곳에서 데이터를 Fetch하여 Home Component에 넘겨줍니다.
 export default async function Page() {
   const recipeData = await fetch("http://localhost:3000/api/recipedata",{
     method:"POST",

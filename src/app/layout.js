@@ -43,21 +43,12 @@ function Nav(props) { //Developed by 장소현
         <div className='nav_subMenu'>
           <Link href="/search" className='nav_subMenu_item'><BiSearchAlt2 /></Link>
           <Link href="/calculator" className='nav_subMenu_item'><BiSolidCalculator /></Link>
-          {/*           <div className='nav_subMenu_item_menu'>
-            M
-            <div className="dropdown_item">
-                <Link href="/ranking">사용자 랭킹</Link>
-                <Link href="/community">커뮤니티</Link>
-                <Link href="/notice">공지사항</Link>
-                <Link href="/support">문의사항</Link>
-            </div>
-          </div> */}
         </div>
       </div>
     </nav>
   )
 }
-function Footer(props) { //Developed by
+function Footer(props) { //Developed by 장소현
   return (
     <footer className={props.font.className}>
       <div className='footer_container'>
@@ -80,7 +71,6 @@ function Footer(props) { //Developed by
         <h2 className='footer_item_3_logo'>CockTell</h2>
         <h3>© 2023. by ChaeSoGong. All rights are reserved.</h3>
         </div>
-      
       </div>
     </footer>
   )
