@@ -4,7 +4,7 @@
     - 개발자 : 임채윤, 장소현
     - 디자인 도움 : 김동환
 - 사용 언어 : Next.js (풀스택 개발)
-- 사용 데이터베이스 : Notion API
+- 사용 데이터베이스 : Notion API (https://www.notion.so/CockTell-DataBase-d0118987948a4e8c883822e12d0dd60b)
 
 ## 프로젝트 실행방법
 1. node.js가 설치되어 있는 터미널을 준비한 뒤 프로젝트 파일 내부에 접근한다.
