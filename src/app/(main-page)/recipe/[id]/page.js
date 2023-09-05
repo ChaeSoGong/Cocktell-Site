@@ -6,10 +6,17 @@ import Share from '@/app/(client-component)/share';
 
 export default async function RecipeDetail(props) {
   const id = props.params.id;
-  // const cocktail = await getRecipeData('id', id);
-  const cocktailPromise = await fetch(`http://localhost:3000/api/recipedata/${id}`,
+  let isFetch = false;
+  let cocktailData = null;
+  if (!isFetch){
+  const recipeAPI = await import("../../../api/recipedata/[id]/route.js");
+  const recipePromise = await recipeAPI.GET(id);
+  cocktailData = await recipePromise.json();
+}
+
+/*   const cocktailPromise = await fetch(`../../../api/recipedata/${id}`,
     { method: "GET" })
-  const cocktailData = await cocktailPromise.json();
+  const cocktailData = await cocktailPromise.json(); */
 
   const BaseName = () => {
     if (cocktailData.mainmaterial[0] !== undefined) {

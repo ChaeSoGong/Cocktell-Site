@@ -64,9 +64,12 @@ main>div {
     background-color: #eee;
 }
 
-/* 더보기 기능 : 장소현 */
+/* --------------- L A Y O U T --------------- */
+/* 더보기 : 장소현 */
+
 .recipe_moreview{
     display: flex;
+    /* background-color: #505050; */
     justify-content: center;
 
 }
@@ -83,8 +86,6 @@ main>div {
     border-radius: 10px;
     margin-top:100px;
 }
-
-
 
 /* --------------- L A Y O U T --------------- */
 
@@ -107,12 +108,14 @@ header {
 .header_item,
 .header_item>a {
     font-size: 12px;
+    /* font-family: Arial, Helvetica, sans-serif; */
 }
 
 .header_item>input {
     border: 0;
     background-color: transparent;
     font-size: 12px;
+    /* font-family: 'Arial, Helvetica, sans-serif'; */
     cursor: pointer
 }
 
@@ -145,6 +148,7 @@ nav {
 .left_nav {
     display: flex;
     align-items: center;
+    /* font-family: 'Tinos', serif; */
 }
 
 .nav_logo {
@@ -227,6 +231,7 @@ footer {
 }
 
 .footer_container {
+    /* margin: 30px 0 50px 10px; */
     max-width: 1280px;
     height: 250px;
     margin:50px auto 50px auto;
@@ -617,6 +622,7 @@ footer {
     object-fit: cover;
 }
 
+
 /* AI Cocktail Recommend 구현 및 디자인 : 임채윤 */
 .article_text_ai {
     margin-bottom: 100px;
@@ -852,6 +858,7 @@ footer {
     margin: 2px 10px 2px 0;
     padding-left: 5px;
     padding-right: 10px;
+    /* font-family: Arial, Helvetica, sans-serif; */
 }
 
 .signup_item:nth-child(4) {
@@ -1180,7 +1187,6 @@ input.signup_item_item1 {
 
 
 /* ------------ S E A R C H ------------ */
-
 /* layout 부분 : 장소현 */
 .layout_container {
     display: flex;
@@ -1252,6 +1258,8 @@ input.signup_item_item1 {
     size: 2x
 }
 
+/* ------------ S E A R C H ------------ */
+
 /* 검색 초기 화면 부분 : 장소현 */
 .search_box {
     width: auto;
@@ -1314,9 +1322,13 @@ input.signup_item_item1 {
     height: 300px;
     pointer-events: none;
 } 
+
+
 .search_popular_img_container:hover+.search_popular_caption {
     opacity: 1;
 } 
+
+
 .search_popular_caption {
     font-size: 20px;
     color: white;
@@ -1324,6 +1336,7 @@ input.signup_item_item1 {
     align-items: center;
     justify-content: center;
 }
+
 .search_popular_item_infoBox {
     display: flex;
     flex-flow: column nowrap;
@@ -1331,41 +1344,49 @@ input.signup_item_item1 {
     height: 150px;
     margin-bottom: 15px;
 }
+
 .search_popular_item_infoBox>h2 {
     font-size: 20px;
     font-weight: 700;
     user-select: none;
 
 }
+
 .search_popular_item_infoBox>h3 {
     font-size: 15px;
     user-select: none;
 
 }
+
 .search_popular_item_subInfo {
     display: flex;
     justify-content: space-between;
 }
+
 .search_popular_item_left {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: center;
 }
+
 .search_popular_item_level_txt {
     border-right: 1px solid #8d8d8d;
     padding-right: 10px;
     margin-right: 10px;
 }
+
 .search_line {
     border: 1px solid #8d8d8d;
 }
+
 .search_material_container{
     display: grid;
     grid-template-columns: repeat(4, 300px);
     grid-row-gap: 60px;
     justify-content: space-between;
 }
+
 .search_img>img{
     object-fit: cover;    
     width:300px;
@@ -1379,6 +1400,7 @@ input.signup_item_item1 {
     /* border-radius: 10px; */
     justify-content: center;
     user-select: none;
+
 }
 .search_material_item{
     height: 300px;
@@ -1386,6 +1408,7 @@ input.signup_item_item1 {
     justify-content: center;
     position: relative;
 }
+
  .search_caption {
     display: flex;
     flex-flow: column;
@@ -1406,8 +1429,10 @@ input.signup_item_item1 {
     position: absolute;
     bottom : 20px;   
 }
+/* ------------ S E A R C H ------------ */
 
 /* 검색 결과 화면 부분 : 장소현 */
+
 .search_result_container{
     margin-bottom: 100px;
 }
@@ -1450,6 +1475,7 @@ input.signup_item_item1 {
 }
 .search_result_item{
     width: auto;
+    /* border: 1px solid #000000; */
     display: flex;
     flex-flow: row nowrap;
     margin : 25px 0 100px 0 
@@ -1471,6 +1497,7 @@ input.signup_item_item1 {
     margin: 5px 0 20px 0;
     user-select: none;
     align-items: center;
+    
 }
 .search_result_item_right h4{
     font-size: 24px;
@@ -1484,13 +1511,17 @@ input.signup_item_item1 {
     flex-flow: row nowrap;
     align-items: center;
 }
+
 .search_result_item_plus{
     height: 300px;
     display: flex;
     justify-content: space-between;
     flex-flow: column nowrap;
 }
+
 .search_result_item_top{
+    /* border-bottom: 1px solid #747474; */
+    /* height : 250px; */
     width : 920px;
     display: flex;
     flex-flow: column nowrap;
@@ -1499,7 +1530,15 @@ input.signup_item_item1 {
 }
 .search_result_top_nameLevel{
     height: 110px;
+    /* background-color: #5087ae; */
 }
+
+/* .search_result_top_comment{
+    height:110px;
+    display: flex;
+    align-items: center;
+} */
+
 .search_result_noTxt{
     font-size: 30px;
     display: flex;
@@ -1514,22 +1553,28 @@ input.signup_item_item1 {
     align-items: center;
     user-select: none;
     margin: 0 0 15px 0;
+
 }
 .search_result_item_bottom{
     height: 80px;
+    /* background-color: #505050; */
 }
+
 .search_result_item_bottom{
     display: flex;
     align-items: flex-end;
     font-size: 20px;
     color: #747474;
     padding-bottom: 10px;
+
+
 }
 
 /* hover */
 .search_result_item_left{
     position: relative;
 }
+
 .search_result_caption { 
     display: flex;
     flex-flow: column;
@@ -1543,9 +1588,13 @@ input.signup_item_item1 {
     pointer-events: none;
     top : 0;
 } 
+
+
 .search_result_image_box:hover+.search_result_caption{
     opacity: 1;
 } 
+
+
 .search_result_caption {
     font-size: 20px;
     color: white;
@@ -1553,6 +1602,7 @@ input.signup_item_item1 {
     align-items: center;
     justify-content: center;
 }
+
 .search_result_item_top h2:hover{
     color: #787676;
 }
@@ -1604,6 +1654,7 @@ input.signup_item_item1 {
     width: 265px;
     height: 265px;
     box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.501);
+    /* border:1px solid rgb(0, 0, 0, 0.25); */
 }
 
 .recipe_img img {
@@ -1657,7 +1708,7 @@ input.signup_item_item1 {
     margin-bottom: 4px;
 }
 
-/** 레시피 이미지 마우스 Hover - Develop By 임채윤 */
+/** 레시피 이미지 마우스 Hover */
 .recipe_caption {
     display: flex;
     flex-flow: column;
@@ -1743,6 +1794,7 @@ input.signup_item_item1 {
 
 }
 
+
 .recipe_dropdown input[type="checkbox"]:checked+.recipe_dropdown_content {
     display: flex;
     flex-flow: column nowrap;
@@ -1795,6 +1847,8 @@ input[type=checkbox]:checked+label {
     color: white;
     background-color: #D140E9;
 }
+
+
 
 .recipe_dropdown_level {
     display: flex;
@@ -1906,8 +1960,13 @@ input[type=checkbox]:checked+label {
 }
 
 
+
+
+
+
 /* 여기 실험용임 */
 #recipe_dropdown_level_form fieldset {
+    /* display: inline-block; */
     display: flex;
     direction: rtl;
     border: 0;
@@ -1939,6 +1998,13 @@ input[type=checkbox]:checked+label {
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
 
+/* ??? */
+.recipe_dropdown_degree_box input[type="number"]::-webkit-outer-spin-button,
+.recipe_dropdown_degree_box input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
 /* ------------ R E C I P E   D E T A I L ------------ */
 /* 레시피 상세페이지 : 장소현 */
 
@@ -1965,6 +2031,8 @@ input[type=checkbox]:checked+label {
     width : 500px;
     justify-content: space-between;
     height:400px;
+
+
 }
 
 .recipe_detail_top_txt {
@@ -2191,6 +2259,7 @@ input[type=checkbox]:checked+label {
 }
 
 
+
 /* ------------ C U S T O M ------------ */
 
 /* 커스텀 페이지 : 임채윤 */
@@ -2319,6 +2388,35 @@ input[type=checkbox]:checked+label {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+
+
+
+.test_dropdown {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    position: relative
+}
+
+.test_dropdown_checkbox {
+    width: 100%;
+    height: 100%;
+}
+
+.naeyong {
+    display: none;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 400px;
+    height: 300px;
+    background-color: #c68d8d;
+}
+
+.test_dropdown input[type="checkbox"]:checked+.naeyong {
+    display: flex;
 }
 
 

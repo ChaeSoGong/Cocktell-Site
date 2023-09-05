@@ -1,28 +1,23 @@
+//Server Component
 import { blurURL } from "@/config";
 import Image from 'next/image'
 import Link from "next/link";
 import {AiFillHeart} from "react-icons/ai";
 import {AiOutlineHeart} from "react-icons/ai";
 
-
 export default async function CustomRecipe() {
-  const cocktailPromise = await fetch('http://localhost:3000/api/customdata',{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body:JSON.stringify({
+    const customAPI = await import("../../api/customdata/route.js");
+    const customPromise = await customAPI.serverPOST({
       page_size:12,
       filter:{
         "property":"type",
         "select":{"equals":"Custom"}
       }
     })
-  })
-  const cocktailData = await cocktailPromise.json();
+  const cocktailData = await customPromise.json();
   return (
       <div className="custom_container">
-        {cocktailData.map((data=>{
+        {cocktailData?.map((data=>{
           return(
             <div className="custom_item" key={data.id}>
 
@@ -30,8 +25,7 @@ export default async function CustomRecipe() {
                 <div className="custom_img">
                   {/* 두번쨰 */}
                     <Link href={`/recipe/${data.id}`}>
-                      <Image src={data.image} alt={data.name} placeholder="blur" blurDataURL={blurURL}
-                      fill={true} sizes="265"></Image>
+                      <img src={data.image} alt={data.name} sizes="265"></img>
                     </Link>
                 </div>
                 <div className="custom_caption"> 

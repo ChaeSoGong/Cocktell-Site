@@ -2,7 +2,9 @@ import './globals.css'
 import Link from 'next/link'
 import { BiSearchAlt2 } from "react-icons/bi";
 import { BiSolidCalculator } from "react-icons/bi";
-import { noto_sans, playfair_display, diphylleia } from './fonts'
+import { noto_sans, playfair_display } from './fonts'
+
+//Import Client Component
 import Header from './(client-component)/header.js' //Header Component
 
 export const metadata = {
@@ -14,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html className={noto_sans.className}> {/** 얘 이름만 바꾸면 폰트 변경 */}
       <body>
-        <Header></Header> {/** Developed by 임채윤 - Header is Client Component */}
+        <Header></Header> {/* Developed by 임채윤 - Header is Client Component */}
         <Nav font={playfair_display}></Nav> {/** Developed by 장소현 - Nav is Server Component */}
         <main>
           {children} {/** This is Page Component */}
@@ -71,6 +73,7 @@ function Footer(props) { //Developed by 장소현
         <h2 className='footer_item_3_logo'>CockTell</h2>
         <h3>© 2023. by ChaeSoGong. All rights are reserved.</h3>
         </div>
+      
       </div>
     </footer>
   )
