@@ -15,3 +15,5 @@ npm run start
 
 ## json Server 여는 방법
 npx json-server --port 9999 --watch db.json
+
+ https://cocktellchaesogong.netlify.app/
