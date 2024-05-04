@@ -2,7 +2,7 @@ import './globals.css'
 import Link from 'next/link'
 import { BiSearchAlt2 } from "react-icons/bi";
 import { BiSolidCalculator } from "react-icons/bi";
-import { noto_sans, playfair_display, diphylleia } from './fonts'
+import { noto_sans, playfair_display } from './fonts'
 import Header from './(client-component)/header.js' //Header Component
 
 export const metadata = {
