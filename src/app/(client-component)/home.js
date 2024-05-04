@@ -153,9 +153,9 @@ function MyBagPreview(props) {
         slidesPerView: 5, allowTouchMove: false
     }
     SwiperCore.use([Autoplay]);
-    const mainMaterial = props.materialData?.filter((item) => (item.type === 'mainmaterial'))
-    const subMaterial = props.materialData?.filter((item) => (item.type === 'submaterial'))
-    const garnishMaterial = props.materialData?.filter((item) => (item.type === 'garnish'))
+    const mainMaterial = props.materialData.filter((item) => (item.type === 'mainmaterial'))
+    const subMaterial = props.materialData.filter((item) => (item.type === 'submaterial'))
+    const garnishMaterial = props.materialData.filter((item) => (item.type === 'garnish'))
     return (<article className='home_article'>
         <div className='article_text'>
             <h2>냉장고에 있는 재료로 찾는 칵테일 레시피</h2>
