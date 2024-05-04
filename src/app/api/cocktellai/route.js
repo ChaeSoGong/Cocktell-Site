@@ -28,7 +28,10 @@ export async function POST(request, response){
         max_tokens:150, 
     });
     const result = JSON.parse(res.choices[0].message.content);
-    return NextResponse.json(result);
+    if (result){
+        return NextResponse.json(result);
+    }
+    else return NextResponse.json("AI 기능이 실패하였습니다.");
 }
 
 // const response = await openai.listEngines(); //Chat GPT 엔진 리스트 출력
