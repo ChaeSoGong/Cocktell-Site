@@ -9,24 +9,7 @@ export default async function Result(props) {
     const searchKey = props.params.result //검색어 여기에 들어감
     const afterStr = decodeURIComponent(searchKey) //decode된 검색어
 
-    const recipeAPI = await import("../../../api/allcocktaildata/route.js");
-    const cocktailPromise = await recipeAPI.serverPOST({
-        "filter": {
-            "and": [//기본으로 Cocktell 레시피만 보여줌
-                { "property": "type", "select": { "equals": "Cocktell" } },
-                {
-                    "or": [
-                        { "property": "name", "rich_text": { "contains": afterStr } },
-                        { "property": "comment", "rich_text": { "contains": afterStr } },
-                        { "property": "description", "rich_text": { "contains": afterStr } },
-                        { "property": "mainmaterial", "multi_select": { "contains": afterStr } },
-                        { "property": "submaterial", "multi_select": { "contains": afterStr } },
-                        { "property": "garnish", "multi_select": { "contains": afterStr } }
-                    ]
-                }]
-        }
-    })
-/*     const cocktailPromise = await fetch('http://localhost:3000/api/allcocktaildata', {
+    const cocktailPromise = await fetch('http://localhost:3000/api/allcocktaildata', {
         method: 'POST', headers: { 'Content-Type': "application/json" },
         body: JSON.stringify({
             "filter": {
@@ -44,25 +27,8 @@ export default async function Result(props) {
                     }]
             }
         })
-    }) */
-    const customAPI = await import("../../../api/allcocktaildata/route.js");
-    const customPromise = await customAPI.serverPOST({
-        "filter": {
-            "and": [//기본으로 Cocktell 레시피만 보여줌
-                { "property": "type", "select": { "equals": "Custom" } },
-                {
-                    "or": [
-                        { "property": "name", "rich_text": { "contains": afterStr } },
-                        { "property": "comment", "rich_text": { "contains": afterStr } },
-                        { "property": "description", "rich_text": { "contains": afterStr } },
-                        { "property": "mainmaterial", "multi_select": { "contains": afterStr } },
-                        { "property": "submaterial", "multi_select": { "contains": afterStr } },
-                        { "property": "garnish", "multi_select": { "contains": afterStr } }
-                    ]
-                }]
-        }
     })
-/*     const CustomPromise = await fetch('http://localhost:3000/api/allcocktaildata', {
+    const CustomPromise = await fetch('http://localhost:3000/api/allcocktaildata', {
         method: 'POST', headers: { 'Content-Type': "application/json" },
         body: JSON.stringify({
             "filter": {
@@ -80,10 +46,12 @@ export default async function Result(props) {
                     }]
             }
         })
-    }) */
+    })
+
+
 
     const cocktailList = await cocktailPromise.json();
-    const customList = await customPromise.json();
+    const customList = await CustomPromise.json();
 
     return (
         <div>

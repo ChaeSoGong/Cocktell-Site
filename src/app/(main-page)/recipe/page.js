@@ -1,8 +1,12 @@
 'use client'
 import { IoOptionsOutline } from "react-icons/io5";
 import { BiSearchAlt2 } from "react-icons/bi";
+import Image from 'next/image'
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { blurURL } from "@/config";
+import Share from '@/app/(client-component)/share'
+
 
 //Develop by 임채윤
 export default function Recipe() {
@@ -30,6 +34,10 @@ export default function Recipe() {
   //새로운 filter값이 입력되면 그에 맞게 filter 설정이 변경되고, 새로운 recipeList를 요청함
   useEffect(() => {
     const getRecipe = async () => {
+      // console.log(recipeFilter)
+      // console.log(mainmaterailFilter)
+      // console.log(itemCount)
+
       let options = { //*const로 적혀있어서 값이 변경되지 않는 대참사가 일어났었음 2시간 투자함*
         method: 'POST',
         headers: {
@@ -45,6 +53,7 @@ export default function Recipe() {
             ]
           },
           // { "property": "mainmaterial", "multi_select": { "contains": "Cocktell" } },
+          
           sorts: [
             {
               "property": "id",
@@ -52,8 +61,9 @@ export default function Recipe() {
             }
           ]
         })
+
       }
-      const dataPromise = await fetch('/api/recipedata', options);
+      const dataPromise = await fetch('http://localhost:3000/api/recipedata', options);
       setCocktailData(await dataPromise.json());
     }
     getRecipe();
@@ -65,6 +75,56 @@ export default function Recipe() {
         {cocktailData.map((data => {
           return (
             <RecipeItem key={data.id} data={data}></RecipeItem>
+/*             <div className="recipe_item" key={data.id}>
+              <div className="recipe_img_box">
+                <div className="recipe_img">
+                  <Link href={`/recipe/${data.id}`}>
+                    <Image src={data.image} alt={data.name} placeholder="blur" blurDataURL={blurURL}
+                      fill={true} sizes="265"></Image>
+                  </Link>
+                </div>
+                <div className="recipe_caption">
+                  <div className="recipe_tag_container">
+                    {data.taste.map((taste, i) => {
+                      if (i > 2) { return null };
+                      return (
+                        <div key={i} className="recipe_tag_item tag_taste"># {taste}</div>
+                      )
+                    })}
+                  </div>
+                  <div className="recipe_tag_container">
+                    {data.skill.map((skill, i) => {
+                      return (
+                        <div key={i} className="recipe_tag_item tag_skill"># {skill}</div>
+                      )
+                    })}
+                  </div>
+                  <div className="recipe_tag_container">
+                    <div className="recipe_tag_item tag_glass"># {data.glass} 글라스</div>
+                  </div>
+                </div>
+              </div>
+              <div className="recipe_infor_box">
+                <div className="recipe_infor">
+                  <div className="recipe_name">{data.name}</div>
+                </div>
+                <div className="recipe_comment">{data.comment}</div>
+                <div className="recipe_detail">
+                  <div className="recipe_difficulty">
+                    제작 난이도
+                    <span className="text-xs border h-4 text-gray-400" style={{ margin: "0 8px" }}></span>
+                    <div className="recipe_star text-yellow-500">
+                      {data.level === '1' ? "★☆☆☆☆" : null}
+                      {data.level === '2' ? "★★☆☆☆" : null}
+                      {data.level === '3' ? "★★★☆☆" : null}
+                      {data.level === '4' ? "★★★★☆" : null}
+                      {data.level === '5' ? "★★★★★" : null}
+                    </div>
+                  </div>
+                  <div className="recipe_alcohol text-gray-600 mr-2">{data.degree}%</div>
+                </div>
+              </div>
+            </div> */
           )
         }))}
       </div>
@@ -78,6 +138,8 @@ export default function Recipe() {
       <Filter setRecipeFilter={setRecipeFilter} setMainmaterailFilter={setMainmaterailFilter}></Filter> {/* Develop by 장소현 */}
       {content} {/* Develop by 임채윤 */}
       <MoreContent itemCount={itemCount} setItemCount={setItemCount} ></MoreContent>{/* Develop by 장소현*/}
+      {/* <CopyURL>    </CopyURL> */}
+      {/* <Share className='recipe_detail_bottom_name_icon'/>    */}
     </div>
   )
 }

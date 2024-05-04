@@ -1,11 +1,14 @@
 'use client'
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
 export default function Header(){ //Developed by 임채윤
     
     const [login, setLogin] = useState(false);
     const [headerContent, setHeaderContent] = useState(null);
+    const router = useRouter();
     useEffect(()=>{ //첫 실행 때와 Login State가 변경될 때에 실행
         if(login === true){ //login === true
             setHeaderContent(
@@ -18,6 +21,8 @@ export default function Header(){ //Developed by 임채윤
                         <input type="button" value={'로그아웃'} onClick={()=>{
                             console.log('Button has Pressed');
                             setLogin(false);
+                            router.push('/');
+                            router.refresh();
                             alert('로그아웃 되었습니다');
                         }}/>
                     </div>

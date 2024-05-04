@@ -1,0 +1,47 @@
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+        
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          
+      - name: Setting .env
+        run: |
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env
+          echo "NOTION_TOKEN=${{ secrets.NOTION_TOKEN }}" >> .env
+          echo "NOTION_USERS_DATABASE_ID=${{ secrets.NOTION_USERS_DATABASE_ID }}" >> .env
+          echo "NOTION_RECIPE_DATABASE_ID=${{ secrets.NOTION_RECIPE_DATABASE_ID }}" >> .env
+          echo "NOTION_MATERIAL_DATABASE_ID=${{ secrets.NOTION_MATERIAL_DATABASE_ID }}" >> .env
+          echo "OPENAI_ORG_ID=${{ secrets.OPENAI_ORG_ID }}" >> .env
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
+          cat .env
+          
+      - name: install
+        run: npm install
+      - run : npm run lint
+      - name: build
+        run: npm run build
+        env:
+          CI: true
+          DEPLOY_TARGET: gh-pages
+      - run: touch out/.nojekyll
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.4.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: out
+          clean : true

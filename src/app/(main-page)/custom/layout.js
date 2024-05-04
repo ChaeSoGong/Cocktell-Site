@@ -1,4 +1,3 @@
-//Server Component
 export default function CustomLayout({children}){
     return(
         <div>
