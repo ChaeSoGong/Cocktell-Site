@@ -1,7 +1,7 @@
 import { RECIPE_DATABASE_ID, TOKEN } from "@/config";
 import { NextResponse } from "next/server";
 
-export async function GET(request, response){
+export async function GET(request){
     console.log('Server : One Recipe fetch Start...');
     // console.log(props) {params:{id:'2'}}
     const options = {
@@ -17,7 +17,7 @@ export async function GET(request, response){
             page_size:1,
             filter:{
                 "property":"id",
-                "number":{"equals": Number(response.params.id)}
+                "number":{"equals": Number(request)}
             }
         })
     }

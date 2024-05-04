@@ -155,31 +155,6 @@ export default function Calculator(){
 
 }
 
-// const replay = () => {
-//   inputItems.splice(0,inputItems.length)
-//   var newInputItem = [...inputItems]
-//   newInputItem.splice(0,newInputItem.length)
-//   var newInputItem = 
-//   [{
-//       id : 1,
-//       degree : 0,
-//       amount : 0
-//     },
-//     {
-//       id : 2,
-//       degree : 0,
-//       amount : 0
-//     }]
-//   console.log(newInputItem,"rre");
-
-//   setInputItems(newInputItem);
-//   console.log(inputItems,"input");
-    
-
-//   setResultContent(null);
-// }
-
-
   const changeInput = (event) => {
 
     // console.log(event.target.id)
