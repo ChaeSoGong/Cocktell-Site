@@ -28,7 +28,7 @@ export default function Search() {
           }
         })
       }
-      const dataPromise = await fetch('/api/customdata', options);
+      const dataPromise = await fetch('/api/materialdata', options);
       setMaterialList(await dataPromise.json());
     }
     const getRecipeList = async () => {
