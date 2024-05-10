@@ -1,23 +1,77 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
-export default async function Search() {
-  const blurURL = "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
-    const materialAPI = await import("../../api/materialdata/route.js");
-    const materialPromise = await materialAPI.serverPOST({
-      page_size: 8,
-      filter: {
-        "or": [
-          { "property": "id", "number": { "equals": 33 } },
-          { "property": "id", "number": { "equals": 43 } },
-          { "property": "id", "number": { "equals": 2 } },
-          { "property": "id", "number": { "equals": 18 } },
-          { "property": "id", "number": { "equals": 50 } },
-          { "property": "id", "number": { "equals": 10 } },
-          { "property": "id", "number": { "equals": 34 } },
-          { "property": "id", "number": { "equals": 38 } },
-        ]
+import { useEffect, useState } from "react";
+export default function Search() {
+  const [materialList, setMaterialList] = useState([]);
+  const [recipeList, setRecipeList] = useState([]);
+  useEffect(() => {
+    const getRecipe = async () => {
+      let options = { //*const로 적혀있어서 값이 변경되지 않는 대참사가 일어났었음 2시간 투자함*
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          page_size: 8,
+          filter: {
+            "or": [
+              { "property": "id", "number": { "equals": 33 } },
+              { "property": "id", "number": { "equals": 43 } },
+              { "property": "id", "number": { "equals": 2 } },
+              { "property": "id", "number": { "equals": 18 } },
+              { "property": "id", "number": { "equals": 50 } },
+              { "property": "id", "number": { "equals": 10 } },
+              { "property": "id", "number": { "equals": 34 } },
+              { "property": "id", "number": { "equals": 38 } },
+            ]
+          }
+        })
       }
-    });
+      const dataPromise = await fetch('/api/customdata', options);
+      setMaterialList(await dataPromise.json());
+    }
+    const getRecipeList = async () => {
+      let options = { //*const로 적혀있어서 값이 변경되지 않는 대참사가 일어났었음 2시간 투자함*
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          page_size: 3,
+          filter: {
+            "or": [
+              { "property": "id", "number": { "equals": 21 } },
+              { "property": "id", "number": { "equals": 9 } },
+              { "property": "id", "number": { "equals": 20 } },
+            ]
+          }
+        })
+      }
+      const dataPromise = await fetch('/api/recipedata', options);
+      setRecipeList(await dataPromise.json());
+    }
+    getRecipe();
+    getRecipeList();
+  },[]);
+
+  const blurURL = "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
+    // const materialAPI = await import("../../api/materialdata/route.js");
+    // const materialPromise = await materialAPI.serverPOST({
+    //   page_size: 8,
+    //   filter: {
+    //     "or": [
+    //       { "property": "id", "number": { "equals": 33 } },
+    //       { "property": "id", "number": { "equals": 43 } },
+    //       { "property": "id", "number": { "equals": 2 } },
+    //       { "property": "id", "number": { "equals": 18 } },
+    //       { "property": "id", "number": { "equals": 50 } },
+    //       { "property": "id", "number": { "equals": 10 } },
+    //       { "property": "id", "number": { "equals": 34 } },
+    //       { "property": "id", "number": { "equals": 38 } },
+    //     ]
+    //   }
+    // });
 /*     const materialPromise = await fetch('http://localhost:3000/api/materialdata', {
     method: 'POST',
     headers: {
@@ -39,21 +93,21 @@ export default async function Search() {
       }
     })
   }) */
-  const materialList = await materialPromise.json();
+  // const materialList = await materialPromise.json();
   // console.log(materialList)
   //재료 배열 이름 materialList / map 함수로 활용하세용
 
-    const recipeAPI = await import("../../api/recipedata/route.js");
-    const recipePromise = await recipeAPI.serverPOST({
-      page_size: 3,
-      filter: {
-        "or": [
-          { "property": "id", "number": { "equals": 21 } },
-          { "property": "id", "number": { "equals": 9 } },
-          { "property": "id", "number": { "equals": 20 } },
-        ]
-      }
-    })
+    // const recipeAPI = await import("../../api/recipedata/route.js");
+    // const recipePromise = await recipeAPI.serverPOST({
+    //   page_size: 3,
+    //   filter: {
+    //     "or": [
+    //       { "property": "id", "number": { "equals": 21 } },
+    //       { "property": "id", "number": { "equals": 9 } },
+    //       { "property": "id", "number": { "equals": 20 } },
+    //     ]
+    //   }
+    // })
 /*     const recipePromise = await fetch('http://localhost:3000/api/recipedata', {
     method: 'POST',
     headers: {
@@ -70,7 +124,7 @@ export default async function Search() {
       }
     })
   }) */
-  const recipeList = await recipePromise.json();
+  // const recipeList = await recipePromise.json();
   //칵테일 레시피 배열 이름 = recipeList / map 함수로 활용하세용
 
 
@@ -80,9 +134,9 @@ export default async function Search() {
       <div className="search_box">
         <h2 className="search_txt">실시간 인기 레시피</h2>
         <div className="search_popular_item_container">
-          {recipeList.map((num) => {
-            return (<>
-              <div className="search_popular_item">
+          {recipeList.map((num, index) => {
+            return (
+              <div key={index} className="search_popular_item">
                 <div className="search_popular_img_container">
                   <Link href={`/recipe/${num.id}`} >
                     <img src={num?.image} alt={num.name} fill="true" sizes="300" />
@@ -113,7 +167,6 @@ export default async function Search() {
                   </div>
                 </Link>
               </div>  
-            </>
             );
           })}
         </div>
@@ -121,13 +174,13 @@ export default async function Search() {
         <h2 className="search_txt">인기있는 재료 살펴보기</h2>
         <div className="search_material_container">
    
-          {materialList.map((num) => {
-            return (<>
-              <div className="search_material_item">
+          {materialList.map((num, index) => {
+            return (
+              <div key={index} className="search_material_item">
               
                 <div className="search_img">
 
-                  <img src={num.image} alt={num.name} fill="true" sizes="300" />
+                  <img src={num?.image} alt={num.name} fill="true" sizes="300" />
                 
                 </div>
 
@@ -137,7 +190,6 @@ export default async function Search() {
                 <div>
                 </div>
               </div>
-            </>
             )
           })}
         </div>
