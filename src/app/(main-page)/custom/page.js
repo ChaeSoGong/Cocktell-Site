@@ -5,7 +5,7 @@ import Link from "next/link";
 import {AiFillHeart} from "react-icons/ai";
 import {AiOutlineHeart} from "react-icons/ai";
 
-export default async function CustomRecipe() {
+export default async function CustomRecipe() {  
     const customAPI = await import("../../api/customdata/route.js");
     const customPromise = await customAPI.serverPOST({
       page_size:12,
@@ -25,7 +25,7 @@ export default async function CustomRecipe() {
                 <div className="custom_img">
                   {/* 두번쨰 */}
                     <Link href={`/recipe/${data.id}`}>
-                      <img src={data.image} alt={data.name} sizes="265"></img>
+                      <img src={data?.image} alt={data.name} sizes="265"></img>
                     </Link>
                 </div>
                 <div className="custom_caption"> 

@@ -85,7 +85,7 @@ export default async function Search() {
               <div className="search_popular_item">
                 <div className="search_popular_img_container">
                   <Link href={`/recipe/${num.id}`} >
-                    <img src={num.image} alt={num.name} fill="true" sizes="300" />
+                    <img src={num?.image} alt={num.name} fill="true" sizes="300" />
                   </Link>
                 </div>
                   <div className="search_popular_caption"> 
